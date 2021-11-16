@@ -11,4 +11,6 @@ We will use the data to explore the following questions:
 
 3. For price-sensitive users and those who are not, what are the distributions of annual income and average monthly spending on apps? Cluster in personality? What makes them decide to download and make in-app purchases? Any suggestions for companies or app developers to pitch their app to those users?
 
+- Link to the bookdown book: https://ruopufan.github.io/MobileAppUsage/
+
 *This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*	
