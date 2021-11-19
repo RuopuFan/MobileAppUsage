@@ -2,6 +2,11 @@ introduction
 data-sources
 data-transformation
 missing-values
+column-pattern
+value-patterns
+missing-values-by-app-store
+missing-values-by-app-store-price-sensitivity
+missing-values-by-variable
 results
 interactive-component
 conclusion

@@ -80,6 +80,8 @@ ggplot(missing_appstore, aes(x = fct_reorder(AppStore, Education), y = Education
   theme(legend.position = "none") 
 ```
 
+![](fig/missing-1.png)
+
 If we visualize missing values of `Education` by App store, we can see that the largest number of NAs in education appears in the group NA in App store. We should consider removing these NAs since they have little information for both variables. 
 
 ### Missing values by app store & price sensitivity
@@ -102,6 +104,8 @@ ggplot(app_store, aes(pct_na, reorder(AppStore, pct_na, mean))) +
   ylab("App store") +
   xlab("Percent of NA in PriceSensitive")
 ```
+
+![](fig/missing-2.png)
 
 All people who skipped writing down their App stores have an NA in `PriceSensitive`. People using iOS (Apple Store) appear to have the smallest number of missing values for the price question, so they are the most price-sensitive. We can also see that Android/Google and Samsung market users have similar percentages of NAs.
 
@@ -202,9 +206,11 @@ plot_missing_pattern <- function(dataset, percent = TRUE, rotate_x = 0){
 }
 ```
 
-```{r fig.width=12}
+```{r echo=TRUE, fig.width=12}
 # plot
 plot_missing_pattern(dataset = app_user, percent = FALSE)
 ```
+
+![](fig/missing-3.png)
 
 The most obvious pattern is the complete case (no NA in any column), indicating that over 2,500 observations contain all the information we need. The second most frequent missing pattern appears in the `PriceSensitive` column. It is interesting that many people didn't provide any of their personal information in the survey, as we can see from the third, fourth & fifth patterns.

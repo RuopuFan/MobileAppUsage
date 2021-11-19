@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-11-18" />
+<meta name="date" content="2021-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,6 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-8"><a href="missing-values.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
 <span id="cb7-9"><a href="missing-values.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) </span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="fig/missing-1.png" /></p>
 <p>If we visualize missing values of <code>Education</code> by App store, we can see that the largest number of NAs in education appears in the group NA in App store. We should consider removing these NAs since they have little information for both variables.</p>
 </div>
 <div id="missing-values-by-app-store-price-sensitivity" class="section level3" number="4.2.2">
@@ -273,12 +274,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-4"><a href="missing-values.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;App store&quot;</span>) <span class="sc">+</span></span>
 <span id="cb9-5"><a href="missing-values.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Percent of NA in PriceSensitive&quot;</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="fig/missing-2.png" /></p>
 <p>All people who skipped writing down their App stores have an NA in <code>PriceSensitive</code>. People using iOS (Apple Store) appear to have the smallest number of missing values for the price question, so they are the most price-sensitive. We can also see that Android/Google and Samsung market users have similar percentages of NAs.</p>
 </div>
 </div>
 <div id="missing-values-by-variable" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Missing values by variable</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="missing-values.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb10-2"><a href="missing-values.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing_pattern</span>(<span class="at">dataset =</span> app_user, <span class="at">percent =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="1152" /></p>
+<p><img src="fig/missing-3.png" /></p>
 <p>The most obvious pattern is the complete case (no NA in any column), indicating that over 2,500 observations contain all the information we need. The second most frequent missing pattern appears in the <code>PriceSensitive</code> column. It is interesting that many people didn’t provide any of their personal information in the survey, as we can see from the third, fourth &amp; fifth patterns.</p>
 
 </div>
