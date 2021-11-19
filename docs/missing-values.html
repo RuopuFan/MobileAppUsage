@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-11-16" />
+<meta name="date" content="2021-11-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,6 +55,70 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -76,7 +140,16 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-sources.html"><a href="data-sources.html"><i class="fa fa-check"></i><b>2</b> Data sources</a></li>
 <li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#column-pattern"><i class="fa fa-check"></i><b>4.1</b> Column pattern</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#value-patterns"><i class="fa fa-check"></i><b>4.2</b> Value patterns</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="missing-values.html"><a href="missing-values.html#missing-values-by-app-store"><i class="fa fa-check"></i><b>4.2.1</b> Missing values by app store</a></li>
+<li class="chapter" data-level="4.2.2" data-path="missing-values.html"><a href="missing-values.html#missing-values-by-app-store-price-sensitivity"><i class="fa fa-check"></i><b>4.2.2</b> Missing values by app store &amp; price sensitivity</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#missing-values-by-variable"><i class="fa fa-check"></i><b>4.3</b> Missing values by variable</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
@@ -101,7 +174,114 @@
             <section class="normal" id="section-">
 <div id="missing-values" class="section level1" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Missing values</h1>
+<p>In this section, we will look at the patterns in missing data. We expect to have many missing values in this <code>Mobile App User Dataset</code> as the data are collected from a survey where respondents may skip questions that they prefer not to answer.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="missing-values.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import data</span></span>
+<span id="cb1-2"><a href="missing-values.html#cb1-2" aria-hidden="true" tabindex="-1"></a>app_data <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/mobile_app_user_dataset_1.xlsx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="missing-values.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># choose columns we need for the project</span></span>
+<span id="cb2-2"><a href="missing-values.html#cb2-2" aria-hidden="true" tabindex="-1"></a>app_user <span class="ot">=</span> app_data[<span class="sc">-</span><span class="dv">1</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="missing-values.html#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ID, Q4, Q9_8, Q16, Q17, Q19, Q23, Q24, Q27) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="missing-values.html#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">AppStore =</span> Q4,</span>
+<span id="cb2-5"><a href="missing-values.html#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">PriceSensitive =</span> Q9_8,</span>
+<span id="cb2-6"><a href="missing-values.html#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Gender =</span> Q16,</span>
+<span id="cb2-7"><a href="missing-values.html#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Age =</span> Q17,</span>
+<span id="cb2-8"><a href="missing-values.html#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Nationality =</span> Q19,</span>
+<span id="cb2-9"><a href="missing-values.html#cb2-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">Education =</span> Q23,</span>
+<span id="cb2-10"><a href="missing-values.html#cb2-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">YearsEdu =</span> Q24,</span>
+<span id="cb2-11"><a href="missing-values.html#cb2-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Occupation =</span> Q27)</span></code></pre></div>
+<div id="column-pattern" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Column pattern</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="missing-values.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Missing values by column sum</span></span>
+<span id="cb3-2"><a href="missing-values.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(app_user[,<span class="sc">-</span><span class="dv">1</span>])) <span class="sc">%&gt;%</span> <span class="fu">sort</span>(<span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## PriceSensitive      Education       YearsEdu     Occupation         Gender 
+##           7104           4892           4892           4892           4842 
+##            Age    Nationality       AppStore 
+##           4842           4842           2310</code></pre>
+<p>Here, we define <code>PriceSensitive</code> as people who took price into consideration when choosing apps to download (those who chose <em>Price</em> in Q9). On the other hand, NAs in this column represent people who skipped the question or those who didn’t choose <em>Price</em> for the question. In addition to 7,104 missing values in <code>PriceSensitive</code>, 4,892 people didn’t reply to education, years of education and occupation, while 4,842 values are missing for gender, age and nationalities. It also shows that 2,310 people skipped the question of “which app store do you use?” in the survey.</p>
+</div>
+<div id="value-patterns" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Value patterns</h2>
+<div id="missing-values-by-app-store" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Missing values by app store</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="missing-values.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the levels</span></span>
+<span id="cb5-2"><a href="missing-values.html#cb5-2" aria-hidden="true" tabindex="-1"></a>app_user <span class="ot">=</span> app_user <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="missing-values.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AppStore =</span> <span class="fu">fct_recode</span>(AppStore,</span>
+<span id="cb5-4"><a href="missing-values.html#cb5-4" aria-hidden="true" tabindex="-1"></a>                               <span class="at">iOS =</span> <span class="st">&quot;1&quot;</span>,</span>
+<span id="cb5-5"><a href="missing-values.html#cb5-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Blackberry =</span> <span class="st">&quot;2&quot;</span>,</span>
+<span id="cb5-6"><a href="missing-values.html#cb5-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Android =</span> <span class="st">&quot;3&quot;</span>,</span>
+<span id="cb5-7"><a href="missing-values.html#cb5-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Nokia =</span> <span class="st">&quot;4&quot;</span>,</span>
+<span id="cb5-8"><a href="missing-values.html#cb5-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Samsung =</span> <span class="st">&quot;5&quot;</span>,</span>
+<span id="cb5-9"><a href="missing-values.html#cb5-9" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Windows =</span> <span class="st">&quot;6&quot;</span>,</span>
+<span id="cb5-10"><a href="missing-values.html#cb5-10" aria-hidden="true" tabindex="-1"></a>                               <span class="at">None =</span> <span class="st">&quot;7&quot;</span>,</span>
+<span id="cb5-11"><a href="missing-values.html#cb5-11" aria-hidden="true" tabindex="-1"></a>                               <span class="st">`</span><span class="at">Not sure</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;8&quot;</span>,</span>
+<span id="cb5-12"><a href="missing-values.html#cb5-12" aria-hidden="true" tabindex="-1"></a>                               <span class="at">Other =</span> <span class="st">&quot;9&quot;</span>,</span>
+<span id="cb5-13"><a href="missing-values.html#cb5-13" aria-hidden="true" tabindex="-1"></a>                               <span class="st">`</span><span class="at">Do not use apps</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;10&quot;</span></span>
+<span id="cb5-14"><a href="missing-values.html#cb5-14" aria-hidden="true" tabindex="-1"></a>                               )) <span class="sc">%&gt;%</span></span>
+<span id="cb5-15"><a href="missing-values.html#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AppStore =</span> <span class="fu">as.factor</span>(AppStore))</span>
+<span id="cb5-16"><a href="missing-values.html#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="missing-values.html#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># missing values by app store</span></span>
+<span id="cb5-18"><a href="missing-values.html#cb5-18" aria-hidden="true" tabindex="-1"></a>missing_appstore <span class="ot">=</span> app_user <span class="sc">%&gt;%</span></span>
+<span id="cb5-19"><a href="missing-values.html#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(AppStore) <span class="sc">%&gt;%</span></span>
+<span id="cb5-20"><a href="missing-values.html#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_all</span>(<span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.))) <span class="sc">%&gt;%</span></span>
+<span id="cb5-21"><a href="missing-values.html#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID, <span class="sc">-</span>PriceSensitive)</span>
+<span id="cb5-22"><a href="missing-values.html#cb5-22" aria-hidden="true" tabindex="-1"></a>missing_appstore</span></code></pre></div>
+<pre><code>## # A tibble: 11 x 7
+##    AppStore        Gender   Age Nationality Education YearsEdu Occupation
+##    &lt;fct&gt;            &lt;int&gt; &lt;int&gt;       &lt;int&gt;     &lt;int&gt;    &lt;int&gt;      &lt;int&gt;
+##  1 iOS                106   106         106       113      113        113
+##  2 Do not use apps     24    24          24        24       24         24
+##  3 Blackberry          28    28          28        35       35         35
+##  4 Android            167   167         167       181      181        181
+##  5 Nokia              102   102         102       105      105        105
+##  6 Samsung             76    76          76        80       80         80
+##  7 Windows             23    23          23        23       23         23
+##  8 None              1595  1595        1595      1595     1595       1595
+##  9 Not sure           390   390         390       403      403        403
+## 10 Other               21    21          21        23       23         23
+## 11 &lt;NA&gt;              2310  2310        2310      2310     2310       2310</code></pre>
+<p>When we group the data by different App stores, some missing data appear to be highly correlated: <code>Gender</code>, <code>Age</code> and <code>Nationality</code> share the same patterns of missing values, while <code>Education</code>, <code>YearsEdu</code> and <code>Occupation</code> have exact same numbers of NAs in each App store. This shows that respondents who didn’t answer education-related questions also skipped the one for occupation. People who prefer not to answer their genders and ages avoided answering nationalities too.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="missing-values.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bar plot for edu</span></span>
+<span id="cb7-2"><a href="missing-values.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_appstore, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(AppStore, Education), <span class="at">y =</span> Education, <span class="at">fill =</span> AppStore)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="missing-values.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="missing-values.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Number of missing values by app store&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="missing-values.html#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;App store&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="missing-values.html#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Number of NAs in education (out of 10,208)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="missing-values.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb7-8"><a href="missing-values.html#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="missing-values.html#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;none&quot;</span>) </span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>If we visualize missing values of <code>Education</code> by App store, we can see that the largest number of NAs in education appears in the group NA in App store. We should consider removing these NAs since they have little information for both variables.</p>
+</div>
+<div id="missing-values-by-app-store-price-sensitivity" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Missing values by app store &amp; price sensitivity</h3>
+<pre><code>## # A tibble: 11 x 4
+##    AppStore        num_appstore num_na pct_na
+##    &lt;fct&gt;                  &lt;int&gt;  &lt;int&gt;  &lt;dbl&gt;
+##  1 &lt;NA&gt;                    2310   2310   1   
+##  2 None                    1653   1633   0.99
+##  3 Do not use apps           76     67   0.88
+##  4 Not sure                 737    608   0.82
+##  5 Nokia                    830    438   0.53
+##  6 Other                    150     78   0.52
+##  7 Samsung                  722    357   0.49
+##  8 Android                 2066    990   0.48
+##  9 Windows                  162     72   0.44
+## 10 iOS                     1169    428   0.37
+## 11 Blackberry               333    123   0.37</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="missing-values.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># visualization of the above</span></span>
+<span id="cb9-2"><a href="missing-values.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(app_store, <span class="fu">aes</span>(pct_na, <span class="fu">reorder</span>(AppStore, pct_na, mean))) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="missing-values.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="missing-values.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;App store&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="missing-values.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Percent of NA in PriceSensitive&quot;</span>)</span></code></pre></div>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>All people who skipped writing down their App stores have an NA in <code>PriceSensitive</code>. People using iOS (Apple Store) appear to have the smallest number of missing values for the price question, so they are the most price-sensitive. We can also see that Android/Google and Samsung market users have similar percentages of NAs.</p>
+</div>
+</div>
+<div id="missing-values-by-variable" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Missing values by variable</h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="1152" /></p>
+<p>The most obvious pattern is the complete case (no NA in any column), indicating that over 2,500 observations contain all the information we need. The second most frequent missing pattern appears in the <code>PriceSensitive</code> column. It is interesting that many people didn’t provide any of their personal information in the survey, as we can see from the third, fourth &amp; fifth patterns.</p>
 
+</div>
 </div>
             </section>
 
