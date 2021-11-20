@@ -9,12 +9,12 @@ library(patchwork)
 library(ggplot2)
 ```
 
-```{r echo=TRUE}
+```{r}
 # import data
 app_data = read_excel("data/mobile_app_user_dataset_1.xlsx")
 ```
 
-```{r echo=TRUE}
+```{r}
 # choose columns we need for the project
 app_user = app_data[-1,] %>%
   select(ID, Q4, Q9_8, Q16, Q17, Q19, Q23, Q24, Q27) %>%
@@ -30,7 +30,7 @@ app_user = app_data[-1,] %>%
 
 ## Column pattern
 
-```{r echo=TRUE}
+```{r}
 # Missing values by column sum
 colSums(is.na(app_user[,-1])) %>% sort(decreasing = TRUE)
 ```
@@ -41,7 +41,7 @@ Here, we define `PriceSensitive` as people who took price into consideration whe
 
 ### Missing values by app store
 
-```{r echo=TRUE}
+```{r}
 # rename the levels
 app_user = app_user %>%
   mutate(AppStore = fct_recode(AppStore,
@@ -68,7 +68,7 @@ missing_appstore
 
 When we group the data by different App stores, some missing data appear to be highly correlated: `Gender`, `Age` and `Nationality` share the same patterns of missing values, while `Education`, `YearsEdu` and `Occupation` have exact same numbers of NAs in each App store. This shows that respondents who didn't answer education-related questions also skipped the one for occupation. People who prefer not to answer their genders and ages avoided answering nationalities too.
 
-```{r echo=TRUE}
+```{r}
 # bar plot for edu
 ggplot(missing_appstore, aes(x = fct_reorder(AppStore, Education), y = Education, fill = AppStore)) +
   geom_col() +
@@ -95,7 +95,7 @@ app_store
 ```
 
 
-```{r echo=TRUE}
+```{r}
 # visualization of the above
 ggplot(app_store, aes(pct_na, reorder(AppStore, pct_na, mean))) +
   geom_point() +
@@ -202,7 +202,7 @@ plot_missing_pattern <- function(dataset, percent = TRUE, rotate_x = 0){
 }
 ```
 
-```{r echo=TRUE, fig.width=12}
+```{r fig.width=12}
 # plot
 plot_missing_pattern(dataset = app_user, percent = FALSE)
 ```
