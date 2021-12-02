@@ -1,1 +1,126 @@
 # Data transformation
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(quantmod)
+
+```
+
+```{r}
+# import data
+app_data = read_excel("data/mobile_app_user_dataset_1.xlsx")
+```
+
+```{r}
+# choose AppStore, PriceSensitive, WhyDownload & demographic columns
+app_user = app_data[-1,] %>%
+  select(ID, Q4, Q9_8, Q12.1_2_TEXT, Q16, Q17, Q19, Q23, Q24, Q27) %>%
+  rename(AppStore = Q4,
+         PriceSensitive = Q9_8,
+         WhyDownload = Q12.1_2_TEXT,
+         Gender = Q16,
+         Age = Q17,
+         Nationality = Q19,
+         Education = Q23,
+         YearsEdu = Q24,
+         Occupation = Q27)
+```
+
+```{r}
+WhyPay = app_data[-1,] %>%
+  select(ID, starts_with("Q11")) %>%
+  rename(
+    `I do not pay for apps` = Q11_1,
+    `To remove ad` = Q11_2,
+    `App is on sale` = Q11_3,
+    `Subscription to free content` = Q11_4,
+    `Pay for features` = Q11_5,
+    `No similar free app` = Q11_6,
+    `Better quality in general` = Q11_11,
+    `More features in general` = Q11_12,
+   ` For additional features or content` = Q11_7,
+    `Subscription to paid content` = Q11_8,
+    `Better quality than free apps`  = Q11_9,
+    Other = Q11_10
+  )
+```
+
+
+```{r}
+# app categories
+app_type = app_data[-1, ] %>%
+  select(ID, starts_with("Q15")) %>%
+  rename(
+    Navigation = Q15_1,
+    Business = Q15_2,
+    Catalogues = Q15_3,
+    Travel = Q15_4,
+    Books = Q15_5,
+    PhotoVideo = Q15_6,
+    Lifestyle = Q15_7,
+    Entertainment = Q15_8,
+    Finance = Q15_9,
+    News = Q15_10,
+    Health = Q15_11,
+    Games = Q15_12,
+    Food = Q15_13,
+    Education = Q15_14,
+    Medical = Q15_15,
+    SocialNetworking = Q15_16,
+    Reference = Q15_17,
+    Sports = Q15_18,
+    Utilities = Q15_19,
+    Weather = Q15_20,
+    Productivity = Q15_21,
+    Music = Q15_22,
+    Other = Q15_23
+  )
+```
+
+
+```{r}
+# currency table
+currency = app_data[-1, ] %>%
+  select(ID, starts_with("Q29"), -Q29.13) %>%
+  rename(
+    AUD = Q29.1,
+    BRL = Q29.2,
+    GBP = Q29.3,
+    CAD = Q29.4,
+    CNY = Q29.5,
+    EUR = Q29.6,
+    INR = Q29.7,
+    JPY = Q29.8,
+    MXN = Q29.9,
+    RUB = Q29.10,
+    KRW = Q29.11,
+    USD = Q29.12
+  )
+```
+
+```{r}
+# drop NAs
+currency_1 = currency %>%
+  pivot_longer(!ID, values_to = "HH Income", names_to = "Currency", values_drop_na = TRUE)
+```
+
+
+```{r}
+# from other currencies to usd
+ex_rate = getQuote(paste0(from = names(currency), to = "USD", "=X"))[,"Last"]
+rates = tibble(from = names(currency), to = "USD", rate = ex_rate)
+
+currencyCon = function(x, from = "AUD", to = "USD", lookup = rates) {
+  values = lookup$rate
+  names(values) <- lookup$to
+  values[to] / (values[from] / x)
+}
+
+currencyCon()
+```
+
+```{r}
+
+```
+
