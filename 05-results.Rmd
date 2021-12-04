@@ -1,1 +1,13 @@
 # Results
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+# import data
+app_user_clean = read.csv("output/app_user_clean.csv")
+app_type = read.csv("output/app_type.csv")
+WhyPay = read.csv("output/WhyPay.csv")
+```

@@ -213,6 +213,13 @@ app_user_clean = left_join(app_user, currency_1)
 ```
 
 ```{r}
+#export csv
+write.csv(app_user_clean, "output/app_user_clean.csv", row.names = FALSE)
+write.csv(app_type, "output/app_type.csv", row.names = FALSE)
+write.csv(WhyPay, "output/WhyPay.csv", row.names = FALSE)
+```
+
+```{r}
 # latest exchange rate
 ex_rate = getQuote(paste0(from = names(currency), to = "USD", "=X"))[,"Last"]
 rates = tibble(from = names(currency), to = "USD", rate = ex_rate)
