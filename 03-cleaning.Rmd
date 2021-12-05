@@ -27,6 +27,24 @@ app_user = app_data[-1,] %>%
 ```
 
 ```{r}
+# rename Price Sensitive levels
+app_user = app_user %>%
+  mutate(PriceSensitive = as.factor(PriceSensitive)) %>%
+  mutate(PriceSensitive = fct_recode(
+    PriceSensitive, Yes = "1"))
+```
+
+```{r}
+# rename gender levels
+app_user = app_user %>%
+  mutate(Gender = as.factor(Gender)) %>%
+  mutate(Gender = fct_recode(
+    Gender, Male = "1", Female = "2"))
+```
+
+
+
+```{r}
 # rename AppStore levels
 app_user = app_user %>%
   mutate(
@@ -86,7 +104,7 @@ app_user = app_user %>%
       `Arch & Eng` = "4",
       `Life, Phys & Soc Sci` = "5",
       `Cmty & Soc Svcs` = "6",
-      `Legal` = "7",
+      Legal = "7",
       `Edu, Trng & Lib` = "8",
       `Arts, Entmt & Sports` = "9",
       `Healthcare Pract & Tech` = "10",
@@ -188,10 +206,10 @@ currency = app_data[-1, ] %>%
 ```{r}
 # drop NAs & rename currency levels
 currency_1 = currency %>%
-  pivot_longer(!ID, values_to = "HH Income", names_to = "Currency", values_drop_na = TRUE) %>%
+  pivot_longer(!ID, values_to = "HH.Income", names_to = "Currency", values_drop_na = TRUE) %>%
   mutate(
-    `HH Income` = fct_recode(
-      `HH Income`,
+    HH.Income = fct_recode(
+      HH.Income,
       `0 - 10,000` = "1",
       `10,001 - 20,000` = "2",
       `20,001 - 40,000` = "3",
@@ -204,12 +222,25 @@ currency_1 = currency %>%
       `300,001 - 450,000` = "10",
       `Over 450,000` = "11",
       `Prefer not to say` = "12"
-    ))
+    )) %>%
+  mutate(HH.Income = as.factor(HH.Income))
+```
+
+```{r}
+# drop rows with duplicated income info
+id_to_del = currency_1 %>%
+  group_by(ID) %>%
+  count(ID, sort = TRUE) %>%
+  filter(n > 1)
+
+currency_2 = currency_1 %>%
+  filter(!(ID %in% id_to_del$ID & Currency == "Other"))
 ```
 
 ```{r}
 # merge with the main table
-app_user_clean = left_join(app_user, currency_1)
+app_user_clean = left_join(app_user, currency_2)
+head(app_user_clean)
 ```
 
 ```{r}
@@ -220,6 +251,7 @@ write.csv(WhyPay, "output/WhyPay.csv", row.names = FALSE)
 ```
 
 ```{r}
+# if needed:
 # latest exchange rate
 ex_rate = getQuote(paste0(from = names(currency), to = "USD", "=X"))[,"Last"]
 rates = tibble(from = names(currency), to = "USD", rate = ex_rate)
