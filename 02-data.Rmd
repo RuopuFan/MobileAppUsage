@@ -1,2 +1,28 @@
 # Data sources
 
+The Worldwide Mobile App User Behavior Dataset contains cross-country user behavior data collected through a survey conducted by Lim et al. for their research paper, Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering, aiming to investigate the relationship between app user behavior and the country demographic. The dataset is made public and stored in Harvard Dataverse Repository, an open data repository organized by the Harvard community.
+
+The survey collected responses from 10,208 participants spanning more than 15 countries, including the United States of America, China, Japan, Germany, France, Brazil, the United Kingdom, Italy, Russian Federation, India, Canada, Spain, Australia, Mexico, and Republic of Korea. The questionnaire is threefold with 31 questions in total: the first part focused on user behavior in terms of mobile app usage; the second part asked individual demographic information such as gender, age, and household income, etc; the third part centered around user personality based on the Big Five personality traits.
+
+A more detailed description about the attributes included in this dataset is as following:
+
+Dataset: mobile_app_user_dataset.xlsx
+
+Link to Harvard Dataverse Repository: https://dataverse.harvard.edu/dataset.xhtml;jsessionid=c4428c7c612c7607165aa4d0ebde?persistentId=doi%3A10.7910%2FDVN%2F27459&version=&q=&fileAccess=&fileTag=%22dataset%22&fileSortField=name&fileSortOrder=desc
+
+
+```{r, include=FALSE}
+library(tidyverse)
+data_source <- read.csv("data/data_source_col_description.csv")
+```
+
+```{r, echo=FALSE}
+knitr::kable(
+  data_source, booktabs = TRUE,
+  caption = 'Column Description'
+)
+```
+
+Issue with this dataset: this survey is self-reported and therefore, might be subjected and be influenced by factors such as individual experience and cultural background. Besides, many answers provided by participants are not exact but mostly approximations. For example, users might be unaware of the exact number of apps downloaded per month and use an approximation instead.
+
+
