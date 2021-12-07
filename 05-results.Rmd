@@ -9,29 +9,161 @@ library(RColorBrewer)
 library(tidytext)
 library(stringi)
 library(qdapDictionaries)
+library(patchwork)
 ```
 
 ```{r}
 # import data
-app_user_clean = read.csv("output/app_user_clean.csv")
-app_type = read.csv("output/app_type.csv")
-WhyPay = read.csv("output/WhyPay.csv")
+app_user_clean = read_csv("output/app_user_clean.csv", show_col_types = FALSE)
+app_type = read_csv("output/app_type.csv", show_col_types = FALSE)
+WhyPay = read_csv("output/WhyPay.csv", show_col_types = FALSE)
 
 app_user_clean = app_user_clean %>% 
-  mutate(
-    HH.Income = fct_relevel(
-      HH.Income,
-      "0 - 10,000",
-      "10,001 - 20,000",
-      "20,001 - 40,000",
-      "40,001 - 60,000",
-      "60,001 - 80,000",
-      "80,001 - 100,000",
-      "100,001 - 150,000",
-      "150,001 - 200,000",
-      "200,001 - 300,000",
-      "300,001 - 450,000",
-      "Over 450,000"))
+  mutate(HH.Income = fct_relevel(HH.Income,"1","2","3","4","5","6","7","8","9","10","11"))
 ```
 
+# 3. Price-sensitive users
+
+## Income Distribution
+
+```{r}
+# North America
+p1 = app_user_clean %>%
+  drop_na(HH.Income) %>%
+  filter(Currency %in% c("CAD", "USD", "MXN")) %>%
+  filter(HH.Income != "Prefer not to say") %>%
+  filter(PriceSensitive == "Yes") %>%
+  ggplot(aes(x = HH.Income)) +
+  geom_bar() +
+  facet_wrap(~fct_relevel(Currency, "CAD", "USD", "MXN")) +
+  xlab("") +
+  ggtitle("Household Income of Price Sensitive Users",
+          subtitle = "in North America") +
+  coord_flip()
+```
+
+```{r}
+# East Asia
+p2 = app_user_clean %>%
+  drop_na(HH.Income) %>%
+  filter(Currency %in% c("CNY", "JPY", "KRW")) %>%
+  filter(HH.Income != "Prefer not to say") %>%
+  filter(PriceSensitive == "Yes") %>%
+  ggplot(aes(x = HH.Income)) +
+  geom_bar() +
+  facet_wrap(~fct_relevel(Currency,"CNY", "JPY", "KRW")) +
+  xlab("") +
+  ggtitle("Household Income of Price Sensitive Users",
+          subtitle = "in East Asia") +
+  coord_flip()
+```
+
+```{r fig.width=9, fig.height=3}
+# display side by side
+p1 + p2
+```
+
+As we mentioned above, authors of this survey divided income into 12 intervals in order to address the problem of inconsistent income levels in different countries. So we are going to analyze the incomes based the pre-divided intervals as well.
+
+For uses in the North America, there are similar distributions (close to normal) for CAD (Canada Dollar) and USD (US Dollar), while Mexican incomes appear to be more evenly distributed. CNY (Chinese Yuan) users' incomes mostly cluster in a higher financial level. Incomes in JPY (Japanese Yen) mainly range from level 3 to 8, with no data in level 10 and 11. Most of the Korean respondents seem to be students from our guess since they earn the lowest level of income. 
+
+## Reasons why people download apps they spent on
+
+```{r warning=FALSE}
+# price sensitive users
+price_sens = app_user_clean %>%
+  filter(PriceSensitive == "Yes") %>%
+  select(WhyDownload) %>%
+  drop_na() %>%
+  # remove non-English words
+  filter(stri_enc_isascii(WhyDownload) == TRUE) %>%
+  mutate(WhyDownload = tolower(WhyDownload)) %>%
+  unnest_tokens(word, WhyDownload)
+
+words_1 = Corpus(VectorSource(price_sens$word))
+tdm_1 = TermDocumentMatrix(words_1)
+all_tokens = findFreqTerms(tdm_1, 1)
+tokens_to_remove = setdiff(all_tokens, GradyAugmented)
+
+tdm_1 = words_1 %>%
+  tm_map(content_transformer(removeWords), tokens_to_remove) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeWords, stopwords("english")) %>%
+  TermDocumentMatrix() %>%
+  tidy() %>%
+  count(term, sort = TRUE)
+```
+
+```{r warning=FALSE}
+# non price sensitive users
+price_not = app_user_clean %>%
+  filter(is.na(PriceSensitive)) %>%
+  select(WhyDownload) %>%
+  drop_na() %>%
+  # remove non-English words
+  filter(stri_enc_isascii(WhyDownload) == TRUE) %>%
+  mutate(WhyDownload = tolower(WhyDownload)) %>%
+  unnest_tokens(word, WhyDownload)
+
+words_2 = Corpus(VectorSource(price_not$word))
+tdm_2 = TermDocumentMatrix(words_2)
+all_tokens = findFreqTerms(tdm_2, 1)
+tokens_to_remove = setdiff(all_tokens, GradyAugmented)
+
+tdm_2 = words_2 %>%
+  tm_map(content_transformer(removeWords), tokens_to_remove) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(removeWords, stopwords("english")) %>%
+  TermDocumentMatrix() %>%
+  tidy() %>%
+  count(term, sort = TRUE)
+```
+
+```{r warning=FALSE, fig.width = 7}
+# Word Cloud 
+par(mfrow=c(1,2))
+set.seed(2021)
+wordcloud(
+  tdm_1$term,
+  tdm_1$n,
+  max.words = 200,
+  min.freq = 1,
+  random.order = FALSE,
+  rot.per = 0.35,
+  use.r.layout = TRUE,
+  random.color = FALSE,
+  colors = brewer.pal(8, "Reds")
+)
+wordcloud(
+  tdm_2$term,
+  tdm_2$n,
+  max.words = 200,
+  min.freq = 1,
+  random.order = FALSE,
+  rot.per = 0.35,
+  use.r.layout = TRUE,
+  random.color = FALSE,
+  colors = brewer.pal(8, "Greens")
+)
+```
+
+For both types of users, many answered "game(s)" ("angry birds" in particular) and an upgrade of "pro" version as the reasons why they downloaded the apps that they had in-app purchase in. Price-sensitive users (word cloud on the left) also spent money on "zombie" type of mobile games. Another obvious pattern for the price-sensitive is that they "can't remember" the reasons for downloading apps but they do remember they've spent money on those apps. In the meanwhile, people that are not as price-sensitive (word cloud on the right) purchased "google" and "office" products essential for business or study.
+
+## Why did people pay?
+
+```{r}
+WhyPay %>%
+  pivot_longer(!c(ID, PriceSensitive), names_to = "Reasons", values_drop_na = TRUE) %>%
+  count(Reasons, PriceSensitive, sort = TRUE) %>%
+  ggplot(aes(n, fct_reorder(Reasons,n))) +
+  geom_line(aes(group = Reasons), alpha = 0.5) +
+  geom_point(aes(color = PriceSensitive)) +
+  ylab("") +
+  xlab("Count") +
+  ggtitle("Why do you spend money on an app?")
+```
+
+Most people do not pay for apps. Among users who spend on apps, many chose "No similar free app", "For additional features or contents" in a paid app and "For features" in an initially free app as the top reasons why they purchase. Another interesting reason is that people think "paid apps have better quality/more features than free apps in general". These popular reasons would be a great guidance for app developers: they should at least meet the user expectation that the apps cost more must have more features or quality contents available. In addition, price-sensitive users usually pay for an app when it "is on sale". So sales promotions are a good choice for developers to pitch their apps to potential users.
 
