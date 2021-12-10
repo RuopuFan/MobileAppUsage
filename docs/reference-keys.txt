@@ -1,3 +1,4 @@
+tab:unnamed-chunk-4
 introduction
 data-sources
 data-transformation
@@ -8,5 +9,13 @@ missing-values-by-app-store
 missing-values-by-app-store-price-sensitivity
 missing-values-by-variable
 results
+analysis-1
+analysis-2
+analysis-3-price-sensitive-users
+income-distribution
+reasons-why-people-download-apps-they-spent-on
+why-did-people-pay
 interactive-component
 conclusion
+analysis-1-1
+analysis-2-1

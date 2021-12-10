@@ -1,6 +1,6 @@
 # Results
 
-```{r setup, include=FALSE}
+```{r}
 library(tidyverse)
 library(ggplot2)
 library(tm)
@@ -10,7 +10,202 @@ library(tidytext)
 library(stringi)
 library(qdapDictionaries)
 library(patchwork)
+library(zoo)
+library(ggridges)
 ```
+
+## Analysis 1
+
+```{r}
+df <- read.csv("output/app_user_clean.csv")
+df$ID <- as.factor(df$ID)
+df$HH.Income <- factor(df$HH.Income, levels = c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Prefer not to say"))
+#fct_relevel(levels(df$HH.Income), "10", "11", after = 9)
+
+df2 <- read.csv("output/app_type.csv")
+df2[,-1] <- as.data.frame(na.fill(df2[,-1], 0)) 
+df2$ID <- as.factor(df2$ID)
+df1_app_type <- merge(df2, df[c("ID", "AppStore")], by = "ID", how = "left", sort = FALSE)
+df2 <- merge(df2, df[c("ID", "Gender")], by = "ID", how = "left", sort = FALSE)
+```
+
+```{r, echo=FALSE}
+# count of user over app store
+df%>%
+  filter(AppStore != "None" & AppStore != "NA" & AppStore != "Do not use apps")%>%
+  ggplot()+
+  geom_bar(aes(x = fct_infreq(AppStore)), fill = "#0892A5")+
+  xlab("app store")+
+  labs(title = "Count of Users by App Store")
+```
+
+The bar chart displays the number of users for different app store. After filtering out users who don't have or use app store or didn't answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, and Samsung. And then, a sharp drop in the number of users occurs for app stores such as Blackberry and Windows app store. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered 'Not sure' for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating system or issue with rebranded as pointed out by Soo et al in their paper "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering".
+
+As there are studies that claim that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and the income level for different app stores. Considering the discrepancy between the actual number of users for each app store, we measured the proportion of different user type in the following analysis.
+
+```{r, echo = FALSE}
+# proportion of price sensitive user facet by app store
+d1 <- df %>% filter(!is.na(AppStore))
+d1$PriceSensitive <- as.factor(na.fill(d1$PriceSensitive, "Not Sure"))
+d1$AppStore <- factor(d1$AppStore, levels = c("Android", "iOS", "Nokia", "Not Sure", "Samsung", "Blackberry", "Windows", "Other", "Do not use apps"))
+
+d1 <- d1 %>%
+  filter(AppStore != "None" & AppStore != "NA" & AppStore != "Do not use apps")%>%
+  group_by(AppStore, PriceSensitive)%>%
+  summarise(freq = n())%>%
+  group_by(AppStore)%>%
+  mutate(perc = freq/sum(freq))%>%
+  ungroup()
+
+ggplot(d1)+
+  geom_col(position = "dodge",
+           aes(x = AppStore, y = perc, fill = PriceSensitive))+
+  scale_fill_manual(values=c("#995D81", "#E5D0CC"))+
+  scale_y_continuous(labels = scales::percent_format())+
+  ylab("Percent")+
+  theme(axis.text.x  = element_text(angle = 15)) +
+  labs(title = "Proportion of Price Sensitive Users For Each App Store")
+```
+
+The above bar chart demonstrates the proportion of price-sensitive and non-price-sensitive user for each app store. The 10% discrepancy between user type for Apple iOS and Blackberry implies that purchasing behaviors of users for these two app stores are more likely to be affected by product price. As Android and Apple iOS are the two most used app store, we further explore user income level distribution for these two app stores.
+
+```{r, echo=FALSE}
+# app store user proportion for income group
+d2 <- df %>%
+  filter(!is.na(HH.Income) & HH.Income != "Prefer not to say") %>%
+  filter(AppStore == "iOS" | AppStore == "Android") %>%
+  group_by(AppStore, HH.Income) %>%
+  summarise(freq = n())%>%
+  group_by(HH.Income) %>%
+  mutate(perc = freq/sum(freq))%>%
+  ungroup()
+
+ggplot(d2) +
+  geom_col(position = "dodge", aes(x = HH.Income, y = perc, fill = AppStore))+
+  scale_fill_manual(values=c("#7C77B9", "#8FBFE0"))+
+  scale_y_continuous(labels = scales::percent_format())+
+  ylab("Percent")+
+  xlab("Income Group")
+```
+
+The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11 (need explain income groups???), and the proportion of Android user is about 60% higher in level 1.
+
+
+Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of proportions Android user and iOS user faceting by user nationality.
+
+```{r, echo=FALSE}
+# app store user proportion facet by nationality
+d3 <- df %>%
+  filter(!is.na(HH.Income) & HH.Income != "Prefer not to say") %>%
+  filter(AppStore == "iOS" | AppStore == "Android") %>%
+  group_by(Nationality, HH.Income, AppStore) %>%
+  summarise(freq = n())%>%
+  group_by(Nationality, HH.Income) %>%
+  mutate(perc = freq/sum(freq))%>%
+  ungroup()
+
+ggplot(d3) +
+  geom_col(aes(x = HH.Income, y = perc, fill = AppStore),
+           position = position_dodge2(width = 0.9, preserve = "single"))+
+  scale_fill_manual(values=c("#7C77B9", "#8FBFE0"))+
+  scale_y_continuous(labels = scales::percent_format())+
+  facet_wrap(~Nationality)+
+  ylab("Percent")+
+  xlab("Income Group")
+```
+
+In most North American countries and European countries, there's cluster of iOS users in higher income level. However, in countries such as India, Russia, and South Korea, Android user dominate in all income groups. (check market share in those countries???)
+
+## Analysis 2
+
+```{r, echo=FALSE}
+# count of user by gender
+ggplot(df)+
+  geom_bar(aes(x = as.factor(Gender)), fill = "#0892A5")+
+  xlab("gender")
+```
+
+The gender of respondents is approximately evenly distributed. A large number of people didn't specify their gender, and therefore, we will ignore those user to analyze gender-neutral app categories and their relationships to user demographic information such as age, nationality, and educational background.
+
+```{r, echo=FALSE}
+d4 <- df2 %>%
+  filter(Gender != 0) %>%
+  pivot_longer(!c(ID, Gender), names_to = "Category", values_to = "count")%>%
+  group_by(Gender, Category)%>%
+  summarise(c = sum(count))
+
+ggplot(d4) +
+  geom_col(aes(x = Category,y = c), fill = "#0892A5")+
+  facet_wrap(~Gender)+
+  coord_flip()+
+  labs(title = "User Count for Different Categories Facet by Gender")
+```
+
+```{r, echo=FALSE}
+# check difference of download between gender
+### run hypo testing to set boundaries?
+d4 %>%
+  pivot_wider(names_from = Gender, values_from = c) %>%
+  mutate(diff = abs(Female-Male), sign = as.factor(sign(Female-Male)))%>%
+  ggplot(aes(Category, diff, fill = sign))+
+  geom_col(aes(fct_rev(fct_reorder(Category, abs(diff)))))+
+  coord_flip()+
+  scale_fill_manual(values=c("#7C77B9", "#8FBFE0"), name = "Gender Dominance", labels = c("Male-dominated", "Female-dominated"))+
+  labs(title = "Gender Neutrality of App Category", y = "magnitude")
+```
+
+To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing on top and more gender-dominated categories on bottom. We pick 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
+
+```{r, echo=FALSE}
+# get gender neutral categories:reference, music, education, catalogues
+d5 <- merge(df[c("ID", "Age", "YearsEdu", "Nationality")], df2[c("ID", "Gender", "Reference", "Music", "Education", "Catalogues")], by ="ID", sort = FALSE)
+
+# download proportion facet by nationality
+d5[c("Nationality","Reference", "Music", "Education", "Catalogues")]%>%
+  pivot_longer(!c(Nationality), names_to = "Category", values_to = "count")%>%
+  filter(!is.na(Nationality))%>%
+  group_by(Nationality)%>%
+  mutate(perc = count/sum(count))%>%
+  ungroup()%>%
+  ggplot()+
+  geom_col(aes(x = Category, y = perc), fill = "#0892A5")+
+  scale_y_continuous(labels = scales::percent_format())+
+  facet_wrap(~Nationality)+
+  ylab( "Percentage")+
+  theme(axis.text.x  = element_text(angle = 20)) 
+```
+
+As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. (explain why???)
+
+```{r, echo=FALSE}
+# age distribution of downloads
+d5[c("Age","Reference", "Music", "Education", "Catalogues")]%>%
+  pivot_longer(!c(Age), names_to = "Category", values_to = "count")%>%
+  filter(!is.na(Age) & count != 0)%>%
+  ggplot()+
+  geom_density_ridges(aes(x = Age, y = Category), quantile_lines = TRUE, quantiles = 2, 
+                      scale = 1, fill = "#0892A5", alpha = 0.8)+
+  labs(title = "Distribution of Age with Highlited Median")
+```
+
+```{r, echo=FALSE}
+# remove outliers and plot years edu distribution
+d5[c("YearsEdu","Reference", "Music", "Education", "Catalogues")]%>%
+  pivot_longer(!c(YearsEdu), names_to = "Category", values_to = "count")%>%
+  filter(!is.na(YearsEdu) & count != 0 & YearsEdu >= 13-1.5*5 & YearsEdu <= 18+1.5*5)%>%
+  ggplot()+
+  geom_bar(aes(x = YearsEdu, y = ..prop.., group = Category), stat = "count", fill = "#0892A5")+
+  facet_wrap(~Category)+
+  scale_y_continuous(labels = scales::percent_format())+
+  labs(title = "Distribution of Years of Education", y = "Percentage")
+```
+
+The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. The distribution of years of education also show similar pattern across categories.
+
+
+## Analysis 3: Price-sensitive users
+
+### Income Distribution
 
 ```{r}
 # import data
@@ -22,10 +217,6 @@ app_user_clean = app_user_clean %>%
   mutate(HH.Income = fct_relevel(HH.Income,"1","2","3","4","5","6","7","8","9","10","11"))
 ```
 
-# 3. Price-sensitive users
-
-## Income Distribution
-
 ```{r}
 # North America
 p1 = app_user_clean %>%
@@ -33,13 +224,15 @@ p1 = app_user_clean %>%
   filter(Currency %in% c("CAD", "USD", "MXN")) %>%
   filter(HH.Income != "Prefer not to say") %>%
   filter(PriceSensitive == "Yes") %>%
-  ggplot(aes(x = HH.Income)) +
+  ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency, "CAD", "USD", "MXN")) +
   xlab("") +
+  ylab("") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in North America") +
-  coord_flip()
+  coord_flip() +
+  theme(legend.position = "none")
 ```
 
 ```{r}
@@ -49,25 +242,60 @@ p2 = app_user_clean %>%
   filter(Currency %in% c("CNY", "JPY", "KRW")) %>%
   filter(HH.Income != "Prefer not to say") %>%
   filter(PriceSensitive == "Yes") %>%
-  ggplot(aes(x = HH.Income)) +
+  ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency,"CNY", "JPY", "KRW")) +
   xlab("") +
+  ylab("") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in East Asia") +
-  coord_flip()
+  coord_flip() +
+  theme(legend.position = "none")
 ```
 
-```{r fig.width=9, fig.height=3}
+```{r}
+# Europe
+p3 = app_user_clean %>%
+  drop_na(HH.Income) %>%
+  filter(Currency %in% c("EUR", "GBP", "RUB")) %>%
+  filter(HH.Income != "Prefer not to say") %>%
+  filter(PriceSensitive == "Yes") %>%
+  ggplot(aes(x = HH.Income, fill = "salmon")) +
+  geom_bar() +
+  facet_wrap(~fct_relevel(Currency, "EUR", "GBP", "RUB")) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Household Income of Price Sensitive Users",
+          subtitle = "in Europe") +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+```{r}
+p4 = app_user_clean %>%
+  drop_na(HH.Income) %>%
+  filter(Currency %in% c("AUD", "BRL", "INR")) %>%
+  filter(HH.Income != "Prefer not to say") %>%
+  filter(PriceSensitive == "Yes") %>%
+  ggplot(aes(x = HH.Income, fill = "salmon")) +
+  geom_bar() +
+  facet_wrap(~fct_relevel(Currency, "AUD", "BRL", "INR")) +
+  xlab("") +
+  ylab("") +
+  ggtitle("Household Income of Price Sensitive Users",
+          subtitle = "in Other Continents") +
+  coord_flip() +
+  theme(legend.position = "none")
+```
+
+```{r fig.width=9, fig.height=5.5}
 # display side by side
-p1 + p2
+p1 + p2 + p3 + p4
 ```
 
-As we mentioned above, authors of this survey divided income into 12 intervals in order to address the problem of inconsistent income levels in different countries. So we are going to analyze the incomes based the pre-divided intervals as well.
+Here we are going to analyze the incomes based the pre-divided intervals as well. For uses in the North America, there are similar distributions (close to normal) for CAD (Canada Dollar) and USD (US Dollar), while Mexican incomes appear to be more evenly distributed. CNY (Chinese Yuan) users' incomes are clustered in a higher level. Incomes in JPY (Japanese Yen) mainly range from level 3 to 8, with no data in the highest level of 10 and 11. Most of the Korean respondents seem to be students from our guess since lots of them earn the lowest level of income. In Europe and other continents, number of the price-sensitive using EUR and BRL (Brazilian Real) appears to be larger than other countries and most observations are clustered under level 5, but for INR (Indian Rupee), there are more people having higher incomes. Overall we can see that income distributions differ a lot in each country.
 
-For uses in the North America, there are similar distributions (close to normal) for CAD (Canada Dollar) and USD (US Dollar), while Mexican incomes appear to be more evenly distributed. CNY (Chinese Yuan) users' incomes mostly cluster in a higher financial level. Incomes in JPY (Japanese Yen) mainly range from level 3 to 8, with no data in level 10 and 11. Most of the Korean respondents seem to be students from our guess since they earn the lowest level of income. 
-
-## Reasons why people download apps they spent on
+### Reasons why people download apps they spent on
 
 ```{r warning=FALSE}
 # price sensitive users
@@ -121,7 +349,7 @@ tdm_2 = words_2 %>%
   count(term, sort = TRUE)
 ```
 
-```{r warning=FALSE, fig.width = 7}
+```{r warning=FALSE, fig.width = 8}
 # Word Cloud 
 par(mfrow=c(1,2))
 set.seed(2021)
@@ -134,7 +362,8 @@ wordcloud(
   rot.per = 0.35,
   use.r.layout = TRUE,
   random.color = FALSE,
-  colors = brewer.pal(8, "Reds")
+  colors = brewer.pal(3, "Reds"),
+  size = 0.5
 )
 wordcloud(
   tdm_2$term,
@@ -145,13 +374,14 @@ wordcloud(
   rot.per = 0.35,
   use.r.layout = TRUE,
   random.color = FALSE,
-  colors = brewer.pal(8, "Greens")
+  colors = brewer.pal(3, "Greys"),
+  size = 0.5
 )
 ```
 
 For both types of users, many answered "game(s)" ("angry birds" in particular) and an upgrade of "pro" version as the reasons why they downloaded the apps that they had in-app purchase in. Price-sensitive users (word cloud on the left) also spent money on "zombie" type of mobile games. Another obvious pattern for the price-sensitive is that they "can't remember" the reasons for downloading apps but they do remember they've spent money on those apps. In the meanwhile, people that are not as price-sensitive (word cloud on the right) purchased "google" and "office" products essential for business or study.
 
-## Why did people pay?
+### Why did people pay?
 
 ```{r}
 WhyPay %>%
@@ -166,4 +396,5 @@ WhyPay %>%
 ```
 
 Most people do not pay for apps. Among users who spend on apps, many chose "No similar free app", "For additional features or contents" in a paid app and "For features" in an initially free app as the top reasons why they purchase. Another interesting reason is that people think "paid apps have better quality/more features than free apps in general". These popular reasons would be a great guidance for app developers: they should at least meet the user expectation that the apps cost more must have more features or quality contents available. In addition, price-sensitive users usually pay for an app when it "is on sale". So sales promotions are a good choice for developers to pitch their apps to potential users.
+
 

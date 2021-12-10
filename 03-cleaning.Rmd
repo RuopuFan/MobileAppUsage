@@ -6,6 +6,18 @@ library(readxl)
 library(quantmod)
 ```
 
+In this dataset, many columns are pre-processed by the authors, so our work is to choose the variables we need and change the names and orders of factor levels.
+
+We cleaned the dataset in the following steps:
+
+- Select `AppStore`, `PriceSensitive`, `WhyDownload`, `Currency` & demographic columns (`Gender`, `Age`, `Nationality`, `Education`, `Occupation`, etc.)
+
+- Mutate character variables to factors
+
+- Rename the levels with readable information
+
+- Reorder the levels  for future visualization
+
 ```{r}
 # import data
 app_data = read_excel("data/mobile_app_user_dataset_1.xlsx")
@@ -149,7 +161,6 @@ WhyPay = app_data[-1,] %>%
 # merge with price-sensitive users
 temp = app_user %>% select(ID, PriceSensitive)
 WhyPay = left_join(WhyPay, temp)
-head(WhyPay)
 ```
 
 ```{r}
@@ -232,8 +243,10 @@ currency_2 = currency_1 %>%
 ```{r}
 # merge with the main table
 app_user_clean = left_join(app_user, currency_2)
-head(app_user_clean)
+head(app_user_clean, 10)
 ```
+
+Here are the first 10 rows of the main table. We  keep NAs for now and will explore the missing values in the next section. For the levels of `HH.Income` column, authors of this survey already divided data into 12 intervals to address the problem of inconsistent income levels in different countries (1 for the lowest & 12 for the highest financial level). We therefore decide to not convert these currencies into a uniform unit and to go with the original income numbers. We will explain in detail in the results part.
 
 ```{r}
 #export csv

@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-11-19" />
+<meta name="date" content="2021-12-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,7 +86,12 @@
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#missing-values-by-variable"><i class="fa fa-check"></i><b>4.3</b> Missing values by variable</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#income-distribution"><i class="fa fa-check"></i><b>5.1</b> Income Distribution</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#reasons-why-people-download-apps-they-spent-on"><i class="fa fa-check"></i><b>5.2</b> Reasons why people download apps they spent on</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#why-did-people-pay"><i class="fa fa-check"></i><b>5.3</b> Why did people pay?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -110,6 +115,30 @@
             <section class="normal" id="section-">
 <div id="data-transformation" class="section level1" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Data transformation</h1>
+<p>In this dataset, many columns are pre-processed by the authors, so our work is to choose the variables we need and change the names and orders of factor levels.</p>
+<p>We cleaned the dataset in the following steps:</p>
+<ul>
+<li><p>Select <code>AppStore</code>, <code>PriceSensitive</code>, <code>WhyDownload</code>, <code>Currency</code> &amp; demographic columns (<code>Gender</code>, <code>Age</code>, <code>Nationality</code>, <code>Education</code>, <code>Occupation</code>, etc.)</p></li>
+<li><p>Mutate character variables to factors</p></li>
+<li><p>Rename the levels with readable information</p></li>
+<li><p>Reorder the levels for future visualization</p></li>
+</ul>
+<pre><code>## # A tibble: 10 x 12
+##    ID    AppStore PriceSensitive WhyDownload Gender Age   Nationality Education
+##    &lt;chr&gt; &lt;fct&gt;    &lt;fct&gt;          &lt;chr&gt;       &lt;fct&gt;  &lt;chr&gt; &lt;fct&gt;       &lt;chr&gt;    
+##  1 1     &lt;NA&gt;     &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;   &lt;NA&gt;  &lt;NA&gt;        &lt;NA&gt;     
+##  2 2     iOS      Yes            &lt;NA&gt;        Male   21    American    5        
+##  3 3     iOS      Yes            &lt;NA&gt;        Male   23    Other       6        
+##  4 4     Android  Yes            &lt;NA&gt;        Male   37    Italian     7        
+##  5 5     iOS      &lt;NA&gt;           Papers      Male   30    Mexican     7        
+##  6 6     iOS      &lt;NA&gt;           navigation  Female 29    British     7        
+##  7 7     iOS      Yes            EagleEyes   Male   29    Other       5        
+##  8 8     Android  Yes            &lt;NA&gt;        Male   31    Australian  5        
+##  9 9     iOS      Yes            &lt;U+82F1&gt;&lt;U+8F9E&gt;&lt;U+90CE&gt;      Male   28    Japanese    7        
+## 10 10    None     &lt;NA&gt;           &lt;NA&gt;        Female 31    Japanese    7        
+## # ... with 4 more variables: YearsEdu &lt;chr&gt;, Occupation &lt;fct&gt;, Currency &lt;chr&gt;,
+## #   HH.Income &lt;fct&gt;</code></pre>
+<p>Here are the first 10 rows of the main table. We keep NAs for now and will explore the missing values in the next section. For the levels of <code>HH.Income</code> column, authors of this survey already divided data into 12 intervals to address the problem of inconsistent income levels in different countries (1 for the lowest &amp; 12 for the highest financial level). We therefore decide to not convert these currencies into a uniform unit and to go with the original income numbers. We will explain in detail in the results part.</p>
 
 </div>
             </section>

@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-11-19" />
+<meta name="date" content="2021-12-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,9 +86,20 @@
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#missing-values-by-variable"><i class="fa fa-check"></i><b>4.3</b> Missing values by variable</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
+<li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#analysis-1"><i class="fa fa-check"></i><b>5.1</b> Analysis 1</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-2"><i class="fa fa-check"></i><b>5.2</b> Analysis 2</a></li>
+<li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#income-distribution"><i class="fa fa-check"></i><b>5.3</b> Income Distribution</a></li>
+<li class="chapter" data-level="5.4" data-path="results.html"><a href="results.html#reasons-why-people-download-apps-they-spent-on"><i class="fa fa-check"></i><b>5.4</b> Reasons why people download apps they spent on</a></li>
+<li class="chapter" data-level="5.5" data-path="results.html"><a href="results.html#why-did-people-pay"><i class="fa fa-check"></i><b>5.5</b> Why did people pay?</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#analysis-1-1"><i class="fa fa-check"></i><b>7.1</b> Analysis 1</a></li>
+<li class="chapter" data-level="7.2" data-path="conclusion.html"><a href="conclusion.html#analysis-2-1"><i class="fa fa-check"></i><b>7.2</b> Analysis 2</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -110,6 +121,219 @@
             <section class="normal" id="section-">
 <div id="data-sources" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Data sources</h1>
+<p>The Worldwide Mobile App User Behavior Dataset contains cross-country user behavior data collected through a survey conducted by Lim et al. for their research paper, Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering, aiming to investigate the relationship between app user behavior and the country demographic. The dataset is made public and stored in Harvard Dataverse Repository, an open data repository organized by the Harvard community.</p>
+<p>The survey collected responses from 10,208 participants spanning more than 15 countries, including the United States of America, China, Japan, Germany, France, Brazil, the United Kingdom, Italy, Russian Federation, India, Canada, Spain, Australia, Mexico, and Republic of Korea. The questionnaire is threefold with 31 questions in total: the first part focused on user behavior in terms of mobile app usage; the second part asked individual demographic information such as gender, age, and household income, etc; the third part centered around user personality based on the Big Five personality traits.</p>
+<p>A more detailed description about the attributes included in this dataset is as following:</p>
+<p>Dataset: mobile_app_user_dataset.xlsx</p>
+<p>Link to Harvard Dataverse Repository: <a href="https://dataverse.harvard.edu/dataset.xhtml;jsessionid=c4428c7c612c7607165aa4d0ebde?persistentId=doi%3A10.7910%2FDVN%2F27459&amp;version=&amp;q=&amp;fileAccess=&amp;fileTag=%22dataset%22&amp;fileSortField=name&amp;fileSortOrder=desc" class="uri">https://dataverse.harvard.edu/dataset.xhtml;jsessionid=c4428c7c612c7607165aa4d0ebde?persistentId=doi%3A10.7910%2FDVN%2F27459&amp;version=&amp;q=&amp;fileAccess=&amp;fileTag=%22dataset%22&amp;fileSortField=name&amp;fileSortOrder=desc</a></p>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 2.1: </span>Column Description</caption>
+<colgroup>
+<col width="17%" />
+<col width="82%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">ï..Column.Name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ID</td>
+<td align="left">Unique ID for each participant</td>
+</tr>
+<tr class="even">
+<td align="left">StartDate</td>
+<td align="left">Date and time the participant started this survey</td>
+</tr>
+<tr class="odd">
+<td align="left">EndDate</td>
+<td align="left">Date and time the participant completed this survey</td>
+</tr>
+<tr class="even">
+<td align="left">Response Status</td>
+<td align="left">Response status: incomplete/complete/screened out/bad data</td>
+</tr>
+<tr class="odd">
+<td align="left">Participant Type</td>
+<td align="left">ours/panel</td>
+</tr>
+<tr class="even">
+<td align="left">Q1_1</td>
+<td align="left">Browser type</td>
+</tr>
+<tr class="odd">
+<td align="left">Q1_2</td>
+<td align="left">Browser version</td>
+</tr>
+<tr class="even">
+<td align="left">Q1_3</td>
+<td align="left">Browser operating system</td>
+</tr>
+<tr class="odd">
+<td align="left">Q1_4</td>
+<td align="left">Browser screen resolution</td>
+</tr>
+<tr class="even">
+<td align="left">Q1_5</td>
+<td align="left">Browser flash version</td>
+</tr>
+<tr class="odd">
+<td align="left">Q1_6</td>
+<td align="left">Browser Java support</td>
+</tr>
+<tr class="even">
+<td align="left">Q1_7</td>
+<td align="left">Browser user agent</td>
+</tr>
+<tr class="odd">
+<td align="left">Q2</td>
+<td align="left">Binary indicator of whether the respondent has a mobile device</td>
+</tr>
+<tr class="even">
+<td align="left">Q3_1</td>
+<td align="left">Mobile device manufacturer</td>
+</tr>
+<tr class="odd">
+<td align="left">Q3_2</td>
+<td align="left">Mobile device model</td>
+</tr>
+<tr class="even">
+<td align="left">Q3_3</td>
+<td align="left">Binary indicator of whether the respondent use apps</td>
+</tr>
+<tr class="odd">
+<td align="left">Q4_1</td>
+<td align="left">Type of app store</td>
+</tr>
+<tr class="even">
+<td align="left">Q4_2</td>
+<td align="left">Binary indicator of whether the respondent knows which app store he/she is using</td>
+</tr>
+<tr class="odd">
+<td align="left">Q5</td>
+<td align="left">Frequency that the respondent visits app store to look for apps</td>
+</tr>
+<tr class="even">
+<td align="left">Q6</td>
+<td align="left">Amount of app downloads per month</td>
+</tr>
+<tr class="odd">
+<td align="left">Q7</td>
+<td align="left">Under what situation does the respondent look for apps</td>
+</tr>
+<tr class="even">
+<td align="left">Q8</td>
+<td align="left">Ways to find apps</td>
+</tr>
+<tr class="odd">
+<td align="left">Q9</td>
+<td align="left">Things to consider before downloading</td>
+</tr>
+<tr class="even">
+<td align="left">Q10</td>
+<td align="left">Purpose of downloading</td>
+</tr>
+<tr class="odd">
+<td align="left">Q11</td>
+<td align="left">Reasons for spending money on apps</td>
+</tr>
+<tr class="even">
+<td align="left">Q12_1</td>
+<td align="left">Maximum spending on an app</td>
+</tr>
+<tr class="odd">
+<td align="left">Q12_2</td>
+<td align="left">Name of the app that the respondent has spent the most</td>
+</tr>
+<tr class="even">
+<td align="left">Q12_3</td>
+<td align="left">Reasons for downloading the app that the respondent has spent the most</td>
+</tr>
+<tr class="odd">
+<td align="left">Q12_4</td>
+<td align="left">Best/worst featue of the app that the respondent has spent the most</td>
+</tr>
+<tr class="even">
+<td align="left">Q12_5</td>
+<td align="left">Average spending on apps per month</td>
+</tr>
+<tr class="odd">
+<td align="left">Q13</td>
+<td align="left">Reasons for rating apps</td>
+</tr>
+<tr class="even">
+<td align="left">Q14</td>
+<td align="left">Reasons for stopping use an app</td>
+</tr>
+<tr class="odd">
+<td align="left">Q15</td>
+<td align="left">Type of downloaded app</td>
+</tr>
+<tr class="even">
+<td align="left">Q16</td>
+<td align="left">Respondent’s gender</td>
+</tr>
+<tr class="odd">
+<td align="left">Q17</td>
+<td align="left">Respondent’s age</td>
+</tr>
+<tr class="even">
+<td align="left">Q18</td>
+<td align="left">Respondent’s marital status</td>
+</tr>
+<tr class="odd">
+<td align="left">Q19</td>
+<td align="left">Respondent’s nationality</td>
+</tr>
+<tr class="even">
+<td align="left">Q20</td>
+<td align="left">Respondent’s country of residence</td>
+</tr>
+<tr class="odd">
+<td align="left">Q21</td>
+<td align="left">Respondent’s first language</td>
+</tr>
+<tr class="even">
+<td align="left">Q22</td>
+<td align="left">Respondent’s ethnicity</td>
+</tr>
+<tr class="odd">
+<td align="left">Q23</td>
+<td align="left">Respondent’s highest level of education</td>
+</tr>
+<tr class="even">
+<td align="left">Q24</td>
+<td align="left">Respondent’s years of education</td>
+</tr>
+<tr class="odd">
+<td align="left">Q25</td>
+<td align="left">Wether the respondent has a disability</td>
+</tr>
+<tr class="even">
+<td align="left">Q26</td>
+<td align="left">Respondent’s current employment status</td>
+</tr>
+<tr class="odd">
+<td align="left">Q27</td>
+<td align="left">Respondent’s occupation</td>
+</tr>
+<tr class="even">
+<td align="left">Q28</td>
+<td align="left">Currency of household income</td>
+</tr>
+<tr class="odd">
+<td align="left">Q29</td>
+<td align="left">Annual household income</td>
+</tr>
+<tr class="even">
+<td align="left">Q30</td>
+<td align="left">Personality traits</td>
+</tr>
+</tbody>
+</table>
+<p>Issue with this dataset: this survey is self-reported and therefore, might be subjected and be influenced by factors such as individual experience and cultural background. Besides, many answers provided by participants are not exact but mostly approximations. For example, users might be unaware of the exact number of apps downloaded per month and use an approximation instead.</p>
 
 </div>
             </section>
