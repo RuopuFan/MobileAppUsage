@@ -208,9 +208,9 @@ d5[c("YearsEdu","Reference", "Music", "Education", "Catalogues")]%>%
 The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. The distribution of years of education also show similar pattern across categories.
 
 
-## Analysis 3: Price-sensitive users
+## Analysis 3
 
-### Income Distribution
+### Income Distribution of Price-sensitive Users
 
 ```{r}
 # import data

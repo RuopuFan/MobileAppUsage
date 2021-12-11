@@ -1,0 +1,193 @@
+<html>
+
+<head>
+<style type="text/css">
+.inline {
+  background-color: #f7f7f7;
+  border:solid 1px #B0B0B0;
+}
+.error {
+	font-weight: bold;
+	color: #FF0000;
+}
+.warning {
+	font-weight: bold;
+}
+.message {
+	font-style: italic;
+}
+.source, .output, .warning, .error, .message {
+	padding: 0 1em;
+  border:solid 1px #F7F7F7;
+}
+.source {
+  background-color: #f5f5f5;
+}
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+  text-align: center;
+}
+.hl.num {
+  color: #AF0F91;
+}
+.hl.str {
+  color: #317ECC;
+}
+.hl.com {
+  color: #AD95AF;
+  font-style: italic;
+}
+.hl.opt {
+  color: #000000;
+}
+.hl.std {
+  color: #585858;
+}
+.hl.kwa {
+  color: #295F94;
+  font-weight: bold;
+}
+.hl.kwb {
+  color: #B05A65;
+}
+.hl.kwc {
+  color: #55aa55;
+}
+.hl.kwd {
+  color: #BC5A65;
+  font-weight: bold;
+}
+</style>
+<title>Interactive d3 Plot</title>
+</head>
+
+<body>
+    <div class="row">
+        <!-- Bootstrap Grid adapted to window size-->
+        <div class="col-md-1 col-xs-1"></div>
+        <div class="col-md-10 col-xs-10">
+            <h2><b>App Store Distribution for Global Mobile Users</b></h2>
+            <h6>**Put your mouse over the colored rectangles to access info of different App stores in each country</h6>
+        </div>
+        <div class="col-md-1 col-xs-1"></div>
+    </div>
+
+<meta charset="utf-8">
+<script src="https://d3js.org/d3.v6.js"></script>
+<div id="interactive"></div>
+
+<script>
+
+// margin & svg set up
+const margin = {top: 10, right: 30, bottom: 70, left: 50},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+const svg = d3.select("#interactive")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+  
+// read CSV data
+d3.csv("https://raw.githubusercontent.com/RuopuFan/MobileAppUsage/main/output/AppStore_Country.csv").then( function(data) {
+
+  // read header & store country names
+  const header = data.columns.slice(1)
+  const country = data.map(d => d.Nationality)
+
+  // Add X axis
+  const x = d3.scaleBand()
+      .domain(country)
+      .range([0, width])
+      .padding([0.2])
+  svg.append("g")
+    .attr("transform", `translate(0, ${height})`)
+    .call(d3.axisBottom(x).tickSizeOuter(0))
+  .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-45)");
+
+  // Add Y axis
+  const y = d3.scaleLinear()
+    .domain([0, 600])
+    .range([ height, 0 ]);
+  svg.append("g")
+    .call(d3.axisLeft(y));
+
+  // set color palette
+  const color = d3.scaleOrdinal()
+    .domain(header)
+    .range(d3.schemeTableau10);
+
+  // stack the data
+  const stackedData = d3.stack()
+    .keys(header)
+    (data)
+
+
+  // create a pointer that shows actual data of each rectangle
+  var pointer = d3.select("#interactive")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "black")
+    .style("color", "white")
+  	.style("width", "150px")
+  	.style("text-align", "center")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+
+  // Show the bars
+  svg.append("g")
+    .selectAll("g")
+    .data(stackedData)
+    .join("g")
+      .attr("fill", d => color(d.key))
+      .attr("class", d => "myRect " + d.key )
+      .selectAll("rect")
+      .data(d => d)
+      .join("rect")
+        .attr("x", d => x(d.data.Nationality))
+        .attr("y", d => y(d[1]))
+        .attr("height", d => y(d[0]) - y(d[1]))
+        .attr("width",x.bandwidth())
+        .attr("stroke", "white")
+        .on("mouseover", function (event,d) { 
+    // actions to take when mouse over each rectangle
+    // highlight app store across countries
+          const countryName =d3.select(this.parentNode).datum().key;
+    			d3.selectAll(".myRect").style("opacity", 0.3);  
+          d3.selectAll("."+countryName).style("opacity",1);
+    // show details about app store hovered
+    			var userCount = d.data[countryName];
+    			pointer.html("App Store: " + countryName + "<br>" + "User Count: " + userCount)
+            .style("opacity", 1);
+        })
+        .on("mousemove", function(event,d){
+    // actions to take when mouse moves
+          pointer.style('transform', `translate(${event.layerX - 30}px, ${event.layerY - 300}px)`)
+				})
+        .on("mouseleave", function (event,d) { 
+    // actions to take when the mouse leave the rectangle
+          d3.selectAll(".myRect")
+          .style("opacity",1);
+    			pointer.style("opacity", 0);
+      	})
+})
+
+</script>
+</body>
+</html>
+
+
+
+

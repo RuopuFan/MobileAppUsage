@@ -1,3 +1,13 @@
 # Interactive component
 
+Link to the interactive graph:
 
+Our interactive graph uses D3 (version 6) and is presented in the html. Users can put mouse over the colored rectangles to access info of different App stores in each country. 
+
+[Data](https://github.com/RuopuFan/MobileAppUsage/blob/main/output/AppStore_Country.csv) and [codes](https://github.com/RuopuFan/MobileAppUsage/blob/main/d3-interactive.html) used in the graph are available in our repository.
+
+![](https://raw.githubusercontent.com/RuopuFan/MobileAppUsage/main/fig/Interactive.png){width=90%}
+
+References:
+
+- Stacked Barplot with Group Highlighting: https://www.d3-graph-gallery.com/graph/barplot_stacked_highlight.html
