@@ -35,13 +35,16 @@ df%>%
   filter(AppStore != "None" & AppStore != "NA" & AppStore != "Do not use apps")%>%
   ggplot()+
   geom_bar(aes(x = fct_infreq(AppStore)), fill = "#0892A5")+
-  xlab("app store")+
-  labs(title = "Count of Users by App Store")
+  xlab("App Store")+
+  ylab("User Count")+
+  labs(title = "What's The Most Used App Store?")
 ```
 
-The bar chart displays the number of users for different app store. After filtering out users who don't have or use app store or didn't answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, and Samsung. And then, a sharp drop in the number of users occurs for app stores such as Blackberry and Windows app store. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered 'Not sure' for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating system or issue with rebranded as pointed out by Soo et al in their paper "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering".
+The bar chart displays the number of users for different app store. After filtering out users who don't have (or use) app store or didn't answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, Samsung, Blackberry, Windows, and some other app stores. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered 'Not sure' for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating systems or issue with rebranding (e.g. Android Market has been rebranded as Google Play) as pointed out by Soo et al in their paper "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering".
 
-As there are studies that claim that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and the income level for different app stores. Considering the discrepancy between the actual number of users for each app store, we measured the proportion of different user type in the following analysis.
+As there are studies that claim that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and their income level across different app stores. Considering the discrepancy between the actual number of users for each app store, we measure the proportion of different user type in the following analysis.
+
+In our analysis, we classify respondents who chose 'price' as a main factor influencing app download decision as 'price-sensitive' and the rest as 'not sure'. The bar chart below demonstrates the proportion of price-sensitive and non-price-sensitive (not sure) user for each app store.
 
 ```{r, echo = FALSE}
 # proportion of price sensitive user facet by app store
@@ -67,7 +70,7 @@ ggplot(d1)+
   labs(title = "Proportion of Price Sensitive Users For Each App Store")
 ```
 
-The above bar chart demonstrates the proportion of price-sensitive and non-price-sensitive user for each app store. The 10% discrepancy between user type for Apple iOS and Blackberry implies that purchasing behaviors of users for these two app stores are more likely to be affected by product price. As Android and Apple iOS are the two most used app store, we further explore user income level distribution for these two app stores.
+The proportion of price-sensitive user is 20% higher for Apple iOS and Blackberry, implying that user purchasing behaviors for these two app stores are more likely to be affected by product price. As Android and Apple iOS are the two most used app store, we narrow our focus to these two app stores and further explore their user income level distribution.
 
 ```{r, echo=FALSE}
 # app store user proportion for income group
@@ -85,10 +88,11 @@ ggplot(d2) +
   scale_fill_manual(values=c("#7C77B9", "#8FBFE0"))+
   scale_y_continuous(labels = scales::percent_format())+
   ylab("Percent")+
-  xlab("Income Group")
+  xlab("Income Group")+
+  labs(title = "Is Owning An IPhone An Indicator of Wealth?")
 ```
 
-The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11 (need explain income groups???), and the proportion of Android user is about 60% higher in level 1.
+Taking into account of socioeconomic development across countries and different currency exchange rate, Soo et al. divide income level into 11 groups while designing the questionnaire: higher group number represents higher the income level. The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11, and the proportion of Android user is about 60% higher in level 1. 
 
 
 Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of proportions Android user and iOS user faceting by user nationality.
@@ -114,7 +118,7 @@ ggplot(d3) +
   xlab("Income Group")
 ```
 
-In most North American countries and European countries, there's cluster of iOS users in higher income level. However, in countries such as India, Russia, and South Korea, Android user dominate in all income groups. (check market share in those countries???)
+In most North American countries and European countries, there are clusters of iOS users in higher income level. However, in countries such as India, Russia, and South Korea, Android user dominate in all income groups. 
 
 ## Analysis 2
 
@@ -125,7 +129,7 @@ ggplot(df)+
   xlab("gender")
 ```
 
-The gender of respondents is approximately evenly distributed. A large number of people didn't specify their gender, and therefore, we will ignore those user to analyze gender-neutral app categories and their relationships to user demographic information such as age, nationality, and educational background.
+The gender of respondents is approximately evenly distributed between male and female, and a large number of people didn't specify their gender. Therefore, we will ignore those users in our following analysis about gender-neutral app categories and their relationships to user demographic information such as age, nationality, and educational background.
 
 ```{r, echo=FALSE}
 d4 <- df2 %>%
@@ -151,10 +155,10 @@ d4 %>%
   geom_col(aes(fct_rev(fct_reorder(Category, abs(diff)))))+
   coord_flip()+
   scale_fill_manual(values=c("#7C77B9", "#8FBFE0"), name = "Gender Dominance", labels = c("Male-dominated", "Female-dominated"))+
-  labs(title = "Gender Neutrality of App Category", y = "magnitude")
+  labs(title = "What's the Most Gender-Neutral App Category?", y = "magnitude")
 ```
 
-To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing on top and more gender-dominated categories on bottom. We pick 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
+To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
 
 ```{r, echo=FALSE}
 # get gender neutral categories:reference, music, education, catalogues
@@ -172,10 +176,11 @@ d5[c("Nationality","Reference", "Music", "Education", "Catalogues")]%>%
   scale_y_continuous(labels = scales::percent_format())+
   facet_wrap(~Nationality)+
   ylab( "Percentage")+
+  labs(title = "Gender Neutral Category Downloads Across Countries")+
   theme(axis.text.x  = element_text(angle = 20)) 
 ```
 
-As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. (explain why???)
+As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. Clearly, music app has gain popularity from both male and female users regardless of nationality.
 
 ```{r, echo=FALSE}
 # age distribution of downloads
