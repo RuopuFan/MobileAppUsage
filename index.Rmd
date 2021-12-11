@@ -11,9 +11,9 @@ With the rapid growth of smartphone industry,  global mobile application market 
 
 In this project, we will carry out analysis based on the [Worldwide Mobile App User Behavior Dataset](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27459), published by Harvard Dataverse. This dataset is collected from a global mobile app usage survey with 10,208 responses. Questions cover from the respondents' app usage habits to demographic information. We will visualize the data and discuss our findings on the following questions:
 
-- What are the app preferences for users using different app stores (e.g. iOS vs Android)?
+- Can we observe any difference in price sensitivity and income distribution for users from different app stores (e.g. iOS vs Android)?
 
-- What categories are more male-/female-dominated? What are some of the gender-neutral categories? How are they connected with the user's age, occupation, nationality, and educational background?
+- What categories are more male-/female-dominated? What are some of the gender-neutral categories? How are they connected with the user's age, nationality, and educational background?
 
 - For price-sensitive users and those who are not, what are the distributions of annual income? What makes them decide to download and make in-app purchases?
 

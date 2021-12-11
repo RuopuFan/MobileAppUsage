@@ -40,9 +40,9 @@ df%>%
   labs(title = "What's The Most Used App Store?")
 ```
 
-The bar chart displays the number of users for different app store. After filtering out users who don't have (or use) app store or didn't answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, Samsung, Blackberry, Windows, and some other app stores. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered 'Not sure' for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating systems or issue with rebranding (e.g. Android Market has been rebranded as Google Play) as pointed out by Soo et al in their paper "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering".
+The bar chart displays the number of users for different app store. After filtering out users who don't have (or use) app store or didn't answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, Samsung, Blackberry, Windows, and some other app stores. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered 'Not sure' for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating systems or issue with rebranding (e.g. Android Market has been rebranded as Google Play) as pointed out by Lim et al in their paper "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering".
 
-As there are studies that claim that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and their income level across different app stores. Considering the discrepancy between the actual number of users for each app store, we measure the proportion of different user type in the following analysis.
+As there are studies claiming that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and their income level across different app stores. Considering the discrepancy between the actual number of users for each app store, we measure the proportion of different user type in the following analysis.
 
 In our analysis, we classify respondents who chose 'price' as a main factor influencing app download decision as 'price-sensitive' and the rest as 'not sure'. The bar chart below demonstrates the proportion of price-sensitive and non-price-sensitive (not sure) user for each app store.
 
@@ -92,10 +92,10 @@ ggplot(d2) +
   labs(title = "Is Owning An IPhone An Indicator of Wealth?")
 ```
 
-Taking into account of socioeconomic development across countries and different currency exchange rate, Soo et al. divide income level into 11 groups while designing the questionnaire: higher group number represents higher the income level. The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11, and the proportion of Android user is about 60% higher in level 1. 
+Taking into account of socioeconomic development across countries and different currency exchange rate, Lim et al. divide income level into 11 groups while designing the questionnaire: higher group number represents higher the income level. The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11, and the proportion of Android user is about 60% higher in level 1. 
 
 
-Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of proportions Android user and iOS user faceting by user nationality.
+Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of user proportions for Android and iOS faceting by user nationality to investigate whether user income pattern is a global trend.
 
 ```{r, echo=FALSE}
 # app store user proportion facet by nationality
@@ -118,7 +118,7 @@ ggplot(d3) +
   xlab("Income Group")
 ```
 
-In most North American countries and European countries, there are clusters of iOS users in higher income level. However, in countries such as India, Russia, and South Korea, Android user dominate in all income groups. 
+Potentially due to Apple's brand power and brand awareness, in most North American countries, there are clusters of iOS users in higher income level, while in European countries, the pattern is less lopsided. On the other hand, Android user dominates all income groups in countries such as India, Russia, and South Korea since in those countries brands such as Samsung and Xiaomi have a higher brand awareness. 
 
 ## Analysis 2
 
@@ -158,20 +158,27 @@ d4 %>%
   labs(title = "What's the Most Gender-Neutral App Category?", y = "magnitude")
 ```
 
-To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
+To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing up on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
+
+### Gender-neutral categories and their relationships to user demographic information
 
 ```{r, echo=FALSE}
 # get gender neutral categories:reference, music, education, catalogues
-d5 <- merge(df[c("ID", "Age", "YearsEdu", "Nationality")], df2[c("ID", "Gender", "Reference", "Music", "Education", "Catalogues")], by ="ID", sort = FALSE)
-
-# download proportion facet by nationality
-d5[c("Nationality","Reference", "Music", "Education", "Catalogues")]%>%
-  pivot_longer(!c(Nationality), names_to = "Category", values_to = "count")%>%
+d5 <- merge(df[c("ID", "Age", "YearsEdu", "Nationality")], df2, by ="ID", sort = FALSE)%>%
   filter(!is.na(Nationality))%>%
+  pivot_longer(!c(ID, Age, YearsEdu,Gender, Nationality), names_to = "Category", values_to = "count")
+
+d5_1 <-d5 %>%
+  group_by(Nationality, Category)%>%
+  summarise(count = sum(count))%>%
   group_by(Nationality)%>%
   mutate(perc = count/sum(count))%>%
   ungroup()%>%
-  ggplot()+
+  filter(Category == "Reference"|Category == "Music"| Category == "Education"| Category == "Catalogues")
+
+
+# download proportion facet by nationality
+ggplot(d5_1)+
   geom_col(aes(x = Category, y = perc), fill = "#0892A5")+
   scale_y_continuous(labels = scales::percent_format())+
   facet_wrap(~Nationality)+
@@ -180,23 +187,24 @@ d5[c("Nationality","Reference", "Music", "Education", "Catalogues")]%>%
   theme(axis.text.x  = element_text(angle = 20)) 
 ```
 
-As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. Clearly, music app has gain popularity from both male and female users regardless of nationality.
+As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. Clearly, music app has gain popularity from both male and female users regardless of nationality. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. Users from India are more likely to download educational apps compared with users from other countries. Cultural difference certainly plays an important role, and developers face the challenge of incorporating insights from countries and cultural differences in feature selection for their apps.
 
 ```{r, echo=FALSE}
 # age distribution of downloads
-d5[c("Age","Reference", "Music", "Education", "Catalogues")]%>%
-  pivot_longer(!c(Age), names_to = "Category", values_to = "count")%>%
+d5%>%
+  filter(Category == "Reference"|Category == "Music"| Category == "Education"| Category == "Catalogues")%>%
   filter(!is.na(Age) & count != 0)%>%
+filter(!is.na(Age) & count != 0)%>%
   ggplot()+
   geom_density_ridges(aes(x = Age, y = Category), quantile_lines = TRUE, quantiles = 2, 
-                      scale = 1, fill = "#0892A5", alpha = 0.8)+
-  labs(title = "Distribution of Age with Highlited Median")
+                      scale = 1, fill = "#068D9D",  color = "#0892A5", alpha = 0.5)+
+  labs(title = "Distribution of Age with Highlighted Median")
 ```
 
 ```{r, echo=FALSE}
 # remove outliers and plot years edu distribution
-d5[c("YearsEdu","Reference", "Music", "Education", "Catalogues")]%>%
-  pivot_longer(!c(YearsEdu), names_to = "Category", values_to = "count")%>%
+d5%>%
+  filter(Category == "Reference"|Category == "Music"| Category == "Education"| Category == "Catalogues")%>%
   filter(!is.na(YearsEdu) & count != 0 & YearsEdu >= 13-1.5*5 & YearsEdu <= 18+1.5*5)%>%
   ggplot()+
   geom_bar(aes(x = YearsEdu, y = ..prop.., group = Category), stat = "count", fill = "#0892A5")+
@@ -205,7 +213,7 @@ d5[c("YearsEdu","Reference", "Music", "Education", "Catalogues")]%>%
   labs(title = "Distribution of Years of Education", y = "Percentage")
 ```
 
-The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. The distribution of years of education also show similar pattern across categories.
+The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. There are new perspectives regarding continuing education, and a small number of respondents claimed they have 80 years of education. However, for analysis purpose, we consider those responses as outlier and remove them using $\pm 1.5\times IQR$ as the threshold. The distribution of years of education also show similar pattern across categories.
 
 
 ## Analysis 3
