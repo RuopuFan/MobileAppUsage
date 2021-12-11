@@ -9,7 +9,7 @@ We will use the data to explore the following questions:
 
 2. What categories are more male-/female-dominated? What are some of the gender-neutral categories? How are they connected with the user's age, occupation, nationality, and educational background?
 
-3. For price-sensitive users and those who are not, what are the distributions of annual income and average monthly spending on apps? Cluster in personality? What makes them decide to download and make in-app purchases? Any suggestions for companies or app developers to pitch their app to those users?
+3. For price-sensitive users and those who are not, what are the distributions of annual income? What makes them decide to download and make in-app purchases?
 
 - Link to the bookdown book: https://ruopufan.github.io/MobileAppUsage/
 
