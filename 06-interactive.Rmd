@@ -8,6 +8,9 @@ Our interactive graph uses D3 (version 6) and is presented in the html. Users ca
 
 ![](https://raw.githubusercontent.com/RuopuFan/MobileAppUsage/main/fig/Interactive.png){width=90%}
 
+/*test interactive visualization*/
+<iframe src="https://github.com/RuopuFan/MobileAppUsage/blob/main/d3-interactive.html.html" width="400" height="300"></iframe>
+
 References:
 
 - Stacked Barplot with Group Highlighting: https://www.d3-graph-gallery.com/graph/barplot_stacked_highlight.html
