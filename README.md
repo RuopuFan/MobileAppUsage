@@ -5,7 +5,7 @@ spending on apps, reasons for using/ not using an app, etc.
 
 We will use the data to explore the following questions:
 
-1. What are the app preferences for users using different app stores (e.g. iOS vs Android)?
+1. Can we observe any difference in price sensitivity and income distribution for users from different app stores (e.g. iOS vs Android)?
 
 2. What categories are more male-/female-dominated? What are some of the gender-neutral categories? How are they connected with the user's age, occupation, nationality, and educational background?
 
