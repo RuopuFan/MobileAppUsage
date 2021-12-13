@@ -128,7 +128,7 @@
 <p><a href="https://github.com/RuopuFan/MobileAppUsage/blob/main/output/AppStore_Country.csv">Data</a> and <a href="https://github.com/RuopuFan/MobileAppUsage/blob/main/d3-interactive.html">codes</a> used in the graph are available in our repository.</p>
 <p><img src="https://raw.githubusercontent.com/RuopuFan/MobileAppUsage/main/fig/Interactive.png" style="width:90.0%" /></p>
 <p>/<em>test interactive visualization</em>/
-<iframe src="https://github.com/RuopuFan/MobileAppUsage/blob/main/d3-interactive.html" width="400" height="300"></iframe></p>
+<iframe src="https://github.com/RuopuFan/MobileAppUsage/blob/main/d3-interactive.html.html" width="400" height="300"></iframe></p>
 <p>References:</p>
 <ul>
 <li>Stacked Barplot with Group Highlighting: <a href="https://www.d3-graph-gallery.com/graph/barplot_stacked_highlight.html" class="uri">https://www.d3-graph-gallery.com/graph/barplot_stacked_highlight.html</a></li>
@@ -195,6 +195,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

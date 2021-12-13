@@ -11,12 +11,10 @@ missing-values-by-variable
 results
 analysis-1
 analysis-2
+gender-neutral-categories-and-their-relationships-to-user-demographic-information
 analysis-3
 income-distribution-of-price-sensitive-users
 reasons-why-people-download-apps-they-spent-on
 why-did-people-pay
 interactive-component
 conclusion
-analysis-1-1
-analysis-2-1
-gender-neutral-categories-and-their-relationships-to-user-demographic-information
