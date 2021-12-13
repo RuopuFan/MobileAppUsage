@@ -11,8 +11,8 @@ We will use the data to explore the following questions:
 
 3. For price-sensitive users and those who are not, what are the distributions of annual income? What makes them decide to download and make in-app purchases?
 
-- Publication related to this dataset: S. L. Lim, P. J. Bentley, N. Kanakam, F. Ishikawa and S. Honiden, "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering," in IEEE Transactions on Software Engineering, vol. 41, no. 1, pp. 40-64, 1 Jan. 2015, doi: 10.1109/TSE.2014.2360674.
-
 - Link to the bookdown book: https://ruopufan.github.io/MobileAppUsage/
 
 *This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*	
+
+Publication related to this dataset: S. L. Lim, P. J. Bentley, N. Kanakam, F. Ishikawa and S. Honiden, "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering," in IEEE Transactions on Software Engineering, vol. 41, no. 1, pp. 40-64, 1 Jan. 2015, doi: 10.1109/TSE.2014.2360674.
