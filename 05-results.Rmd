@@ -67,7 +67,7 @@ ggplot(d1)+
   scale_y_continuous(labels = scales::percent_format())+
   ylab("Percent")+
   theme(axis.text.x  = element_text(angle = 15)) +
-  labs(title = "Proportion of Price Sensitive Users For Each App Store")
+  labs(title = "Proportion of Price Sensitive Users For Each App Store", x = "App Store")
 ```
 
 The proportion of price-sensitive user is 20% higher for Apple iOS and Blackberry, implying that user purchasing behaviors for these two app stores are more likely to be affected by product price. As Android and Apple iOS are the two most used app store, we narrow our focus to these two app stores and further explore their user income level distribution.
@@ -115,7 +115,8 @@ ggplot(d3) +
   scale_y_continuous(labels = scales::percent_format())+
   facet_wrap(~Nationality)+
   ylab("Percent")+
-  xlab("Income Group")
+  xlab("Income Group")+
+  labs(title = "Income Distribution Across Countries")
 ```
 
 Potentially due to Apple's brand power and brand awareness, in most North American countries, there are clusters of iOS users in higher income level, while in European countries, the pattern is less lopsided. On the other hand, Android user dominates all income groups in countries such as India, Russia, and South Korea since in those countries brands such as Samsung and Xiaomi have a higher brand awareness. 
@@ -126,7 +127,8 @@ Potentially due to Apple's brand power and brand awareness, in most North Americ
 # count of user by gender
 ggplot(df)+
   geom_bar(aes(x = as.factor(Gender)), fill = "#0892A5")+
-  xlab("gender")
+  xlab("gender")+
+  labs(title = "User Count by Gender", x = "Gender", y = "Count")
 ```
 
 The gender of respondents is approximately evenly distributed between male and female, and a large number of people didn't specify their gender. Therefore, we will ignore those users in our following analysis about gender-neutral app categories and their relationships to user demographic information such as age, nationality, and educational background.
@@ -142,12 +144,11 @@ ggplot(d4) +
   geom_col(aes(x = Category,y = c), fill = "#0892A5")+
   facet_wrap(~Gender)+
   coord_flip()+
-  labs(title = "User Count for Different Categories Facet by Gender")
+  labs(title = "User Count for Different Categories Facet by Gender", y = "Count")
 ```
 
 ```{r, echo=FALSE}
 # check difference of download between gender
-### run hypo testing to set boundaries?
 d4 %>%
   pivot_wider(names_from = Gender, values_from = c) %>%
   mutate(diff = abs(Female-Male), sign = as.factor(sign(Female-Male)))%>%
@@ -155,7 +156,7 @@ d4 %>%
   geom_col(aes(fct_rev(fct_reorder(Category, abs(diff)))))+
   coord_flip()+
   scale_fill_manual(values=c("#7C77B9", "#8FBFE0"), name = "Gender Dominance", labels = c("Male-dominated", "Female-dominated"))+
-  labs(title = "What's the Most Gender-Neutral App Category?", y = "magnitude")
+  labs(title = "What's the Most Gender-Neutral App Category?", y = "Magnitude")
 ```
 
 To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing up on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.
@@ -198,7 +199,8 @@ filter(!is.na(Age) & count != 0)%>%
   ggplot()+
   geom_density_ridges(aes(x = Age, y = Category), quantile_lines = TRUE, quantiles = 2, 
                       scale = 1, fill = "#068D9D",  color = "#0892A5", alpha = 0.5)+
-  labs(title = "Distribution of Age with Highlighted Median")
+  labs(title = "How Age Varies Among Gender Neutral Categories?",
+       subtitle = "Distribution of Age with Highlighted Median")
 ```
 
 ```{r, echo=FALSE}
@@ -210,7 +212,9 @@ d5%>%
   geom_bar(aes(x = YearsEdu, y = ..prop.., group = Category), stat = "count", fill = "#0892A5")+
   facet_wrap(~Category)+
   scale_y_continuous(labels = scales::percent_format())+
-  labs(title = "Distribution of Years of Education", y = "Percentage")
+  labs(title = "How Education Level Varies Among Gender Neutral Categories?", 
+       y = "Percentage", x = "Years of Education",
+       subtitle = "Distribution of Years of Education After Removing Outliers")
 ```
 
 The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. There are new perspectives regarding continuing education, and a small number of respondents claimed they have 80 years of education. However, for analysis purpose, we consider those responses as outlier and remove them using $\pm 1.5\times IQR$ as the threshold. The distribution of years of education also show similar pattern across categories.
