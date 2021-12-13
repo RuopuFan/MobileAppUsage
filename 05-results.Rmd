@@ -244,8 +244,8 @@ p1 = app_user_clean %>%
   ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency, "CAD", "USD", "MXN")) +
-  xlab("") +
-  ylab("") +
+  xlab("Income Level") +
+  ylab("Count") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in North America") +
   coord_flip() +
@@ -262,8 +262,8 @@ p2 = app_user_clean %>%
   ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency,"CNY", "JPY", "KRW")) +
-  xlab("") +
-  ylab("") +
+  xlab("Income Level") +
+  ylab("Count") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in East Asia") +
   coord_flip() +
@@ -280,8 +280,8 @@ p3 = app_user_clean %>%
   ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency, "EUR", "GBP", "RUB")) +
-  xlab("") +
-  ylab("") +
+  xlab("Income Level") +
+  ylab("Count") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in Europe") +
   coord_flip() +
@@ -297,8 +297,8 @@ p4 = app_user_clean %>%
   ggplot(aes(x = HH.Income, fill = "salmon")) +
   geom_bar() +
   facet_wrap(~fct_relevel(Currency, "AUD", "BRL", "INR")) +
-  xlab("") +
-  ylab("") +
+  xlab("Income Level") +
+  ylab("Count") +
   ggtitle("Household Income of Price Sensitive Users",
           subtitle = "in Other Continents") +
   coord_flip() +
@@ -310,7 +310,7 @@ p4 = app_user_clean %>%
 p1 + p2 + p3 + p4
 ```
 
-Here we are going to analyze the incomes based the pre-divided intervals as well. For uses in the North America, there are similar distributions (close to normal) for CAD (Canada Dollar) and USD (US Dollar), while Mexican incomes appear to be more evenly distributed. CNY (Chinese Yuan) users' incomes are clustered in a higher level. Incomes in JPY (Japanese Yen) mainly range from level 3 to 8, with no data in the highest level of 10 and 11. Most of the Korean respondents seem to be students from our guess since lots of them earn the lowest level of income. In Europe and other continents, number of the price-sensitive using EUR and BRL (Brazilian Real) appears to be larger than other countries and most observations are clustered under level 5, but for INR (Indian Rupee), there are more people having higher incomes. Overall we can see that income distributions differ a lot in each country.
+Here we are going to analyze the incomes based on the pre-divided intervals as well. Incomes are displayed in order of highest to lowest level on the y-axis (from  top to bottom). For uses in the North America, there are similar distributions (close to normal) for CAD (Canada Dollar) and USD (US Dollar), while Mexican incomes appear to be more evenly distributed. CNY (Chinese Yuan) users' incomes are clustered in a higher level. Incomes in JPY (Japanese Yen) mainly range from level 3 to 8, with no data in the highest level of 10 and 11. Most of the Korean respondents seem to be students from our guess since lots of them earn the lowest level of income. In Europe and other continents, number of the price-sensitive using EUR and BRL (Brazilian Real) appears to be larger than other countries and most observations are clustered under level 5, but for INR (Indian Rupee), there are more people having higher incomes. Overall we can see that income distributions differ a lot in each country.
 
 ### Reasons why people download apps they spent on
 

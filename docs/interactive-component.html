@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-12-12" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -154,6 +154,14 @@ const svg = d3.select("#interactive")
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
+    
+svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", margin.top/2)
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("App Store Distribution for Global Mobile Users");
   
 // read CSV data
 d3.csv("https://raw.githubusercontent.com/RuopuFan/MobileAppUsage/main/output/AppStore_Country.csv").then( function(data) {
