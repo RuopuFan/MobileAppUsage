@@ -19,7 +19,8 @@ data_source <- read.csv("data/data_source_col_description.csv")
 ```{r, echo=FALSE}
 knitr::kable(
   data_source, booktabs = TRUE,
-  caption = 'Column Description'
+  caption = 'Column Description',
+  col.names = gsub("[.]", " ", names(data_source))
 )
 ```
 

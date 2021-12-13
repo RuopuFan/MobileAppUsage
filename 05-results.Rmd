@@ -217,7 +217,7 @@ d5%>%
        subtitle = "Distribution of Years of Education After Removing Outliers")
 ```
 
-The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. There are new perspectives regarding continuing education, and a small number of respondents claimed they have 80 years of education. However, for analysis purpose, we consider those responses as outlier and remove them using $\pm 1.5\times IQR$ as the threshold. The distribution of years of education also show similar pattern across categories.
+The distribution of age is approximately the same for all gender-neutral categories, and Music and Education attract more younger users. There are new perspectives regarding continuing education, and a small number of respondents claimed they have 80 years of education. However, for analysis purpose, we consider those responses as outlier and remove them using $\pm 1.5\times IQR$ as the threshold. The distribution of years of education also show similar pattern across categories.
 
 
 ## Analysis 3
