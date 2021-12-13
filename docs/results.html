@@ -24,7 +24,7 @@
 <meta name="author" content="Ruopu Fan &amp; Xiaoyi Zhang" />
 
 
-<meta name="date" content="2021-12-11" />
+<meta name="date" content="2021-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -89,7 +89,10 @@
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="results.html"><a href="results.html#analysis-1"><i class="fa fa-check"></i><b>5.1</b> Analysis 1</a></li>
-<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-2"><i class="fa fa-check"></i><b>5.2</b> Analysis 2</a></li>
+<li class="chapter" data-level="5.2" data-path="results.html"><a href="results.html#analysis-2"><i class="fa fa-check"></i><b>5.2</b> Analysis 2</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="results.html"><a href="results.html#gender-neutral-categories-and-their-relationships-to-user-demographic-information"><i class="fa fa-check"></i><b>5.2.1</b> Gender-neutral categories and their relationships to user demographic information</a></li>
+</ul></li>
 <li class="chapter" data-level="5.3" data-path="results.html"><a href="results.html#analysis-3"><i class="fa fa-check"></i><b>5.3</b> Analysis 3</a>
 <ul>
 <li class="chapter" data-level="5.3.1" data-path="results.html"><a href="results.html#income-distribution-of-price-sensitive-users"><i class="fa fa-check"></i><b>5.3.1</b> Income Distribution of Price-sensitive Users</a></li>
@@ -98,11 +101,7 @@
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
-<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a>
-<ul>
-<li class="chapter" data-level="7.1" data-path="conclusion.html"><a href="conclusion.html#analysis-1-1"><i class="fa fa-check"></i><b>7.1</b> Analysis 1</a></li>
-<li class="chapter" data-level="7.2" data-path="conclusion.html"><a href="conclusion.html#analysis-2-1"><i class="fa fa-check"></i><b>7.2</b> Analysis 2</a></li>
-</ul></li>
+<li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -127,16 +126,16 @@
 <div id="analysis-1" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Analysis 1</h2>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-<p>The bar chart displays the number of users for different app store. After filtering out users who don’t have (or use) app store or didn’t answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, Samsung, Blackberry, Windows, and some other app stores. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered ‘Not sure’ for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating systems or issue with rebranding (e.g. Android Market has been rebranded as Google Play) as pointed out by Soo et al in their paper “Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering”.</p>
-<p>As there are studies that claim that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and their income level across different app stores. Considering the discrepancy between the actual number of users for each app store, we measure the proportion of different user type in the following analysis.</p>
+<p>The bar chart displays the number of users for different app store. After filtering out users who don’t have (or use) app store or didn’t answer the question in the questionnaire, we can see that among all respondents, most users use Android app store, followed by Apple iOS, Nokia, Samsung, Blackberry, Windows, and some other app stores. The distribution of user count, in general, follows the global smartphone market share. Interestingly, quite a lot of users answered ‘Not sure’ for the type of app store in this survey, and this might be due to the fact that some mobile devices support a number of operating systems or issue with rebranding (e.g. Android Market has been rebranded as Google Play) as pointed out by Lim et al in their paper “Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering”.</p>
+<p>As there are studies claiming that owning an Apple iPhone is now a common sign of wealth, we are interested in exploring user price sensitivity and their income level across different app stores. Considering the discrepancy between the actual number of users for each app store, we measure the proportion of different user type in the following analysis.</p>
 <p>In our analysis, we classify respondents who chose ‘price’ as a main factor influencing app download decision as ‘price-sensitive’ and the rest as ‘not sure’. The bar chart below demonstrates the proportion of price-sensitive and non-price-sensitive (not sure) user for each app store.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>The proportion of price-sensitive user is 20% higher for Apple iOS and Blackberry, implying that user purchasing behaviors for these two app stores are more likely to be affected by product price. As Android and Apple iOS are the two most used app store, we narrow our focus to these two app stores and further explore their user income level distribution.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>Taking into account of socioeconomic development across countries and different currency exchange rate, Soo et al. divide income level into 11 groups while designing the questionnaire: higher group number represents higher the income level. The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11, and the proportion of Android user is about 60% higher in level 1.</p>
-<p>Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of proportions Android user and iOS user faceting by user nationality.</p>
+<p>Taking into account of socioeconomic development across countries and different currency exchange rate, Lim et al. divide income level into 11 groups while designing the questionnaire: higher group number represents higher the income level. The proportion of Apple user rises along with income level while the proportion of Android user shows an inverse pattern: the proportion of Apple user is approximately 20% higher in level 11, and the proportion of Android user is about 60% higher in level 1.</p>
+<p>Considering the massive global market share of Android and local brand dominance (e.g. Apple has market share lead over Android in North America), we create a bar char of user proportions for Android and iOS faceting by user nationality to investigate whether user income pattern is a global trend.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<p>In most North American countries and European countries, there are clusters of iOS users in higher income level. However, in countries such as India, Russia, and South Korea, Android user dominate in all income groups.</p>
+<p>Potentially due to Apple’s brand power and brand awareness, in most North American countries, there are clusters of iOS users in higher income level, while in European countries, the pattern is less lopsided. On the other hand, Android user dominates all income groups in countries such as India, Russia, and South Korea since in those countries brands such as Samsung and Xiaomi have a higher brand awareness.</p>
 </div>
 <div id="analysis-2" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Analysis 2</h2>
@@ -144,12 +143,15 @@
 <p>The gender of respondents is approximately evenly distributed between male and female, and a large number of people didn’t specify their gender. Therefore, we will ignore those users in our following analysis about gender-neutral app categories and their relationships to user demographic information such as age, nationality, and educational background.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.</p>
+<p>To find gender-neutral app categories, we first calculate the difference between the number of male user and female user for each app category. If the number of male user is greater than the number of female user, then the category is classified as male-dominated category with a magnitude measured by the absolute value of the difference. We define female-dominated category in a similar fashion. The categories are then sorted by magnitude in ascending order, with more gender-neutral categories showing up on top and more gender-dominated categories at the bottom. We pick the top 4 most gender-neutral categories and analyze the distribution of user demographic data in the following section.</p>
+<div id="gender-neutral-categories-and-their-relationships-to-user-demographic-information" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Gender-neutral categories and their relationships to user demographic information</h3>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. Clearly, music app has gain popularity from both male and female users regardless of nationality.</p>
+<p>As the number of users across countries varies, we compute the percentage of users for each gender-neutral category within each country. Clearly, music app has gain popularity from both male and female users regardless of nationality. The pattern of user proportion by category is almost the same except for France and Germany. The second most popular gender-neutral category is Catalogues in France and Reference in Germany. Users from India are more likely to download educational apps compared with users from other countries. Cultural difference certainly plays an important role, and developers face the challenge of incorporating insights from countries and cultural differences in feature selection for their apps.</p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-<p>The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. The distribution of years of education also show similar pattern across categories.</p>
+<p>The distribution of age is approximately the same for all gender-neutral categories, and Music and Education show attracts more younger users. There are new perspectives regarding continuing education, and a small number of respondents claimed they have 80 years of education. However, for analysis purpose, we consider those responses as outlier and remove them using <span class="math inline">\(\pm 1.5\times IQR\)</span> as the threshold. The distribution of years of education also show similar pattern across categories.</p>
+</div>
 </div>
 <div id="analysis-3" class="section level2" number="5.3">
 <h2><span class="header-section-number">5.3</span> Analysis 3</h2>
@@ -231,6 +233,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
