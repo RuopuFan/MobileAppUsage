@@ -20,3 +20,5 @@ In this project, we will carry out analysis based on the [Worldwide Mobile App U
 Analysis related to the above questions will be presented in the following chapters.
 
 To access the codes and other details, please see our github repository at [MobileAppUsage](https://github.com/RuopuFan/MobileAppUsage).
+
+Publication related to this dataset: S. L. Lim, P. J. Bentley, N. Kanakam, F. Ishikawa and S. Honiden, "Investigating Country Differences in Mobile App User Behavior and Challenges for Software Engineering," in IEEE Transactions on Software Engineering, vol. 41, no. 1, pp. 40-64, 1 Jan. 2015, doi: 10.1109/TSE.2014.2360674.
